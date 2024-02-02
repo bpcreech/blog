@@ -14,25 +14,27 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
 [Params]
   subtitle = "Ben Creech's blog" # Subtitle of your site. Used in site header
   description = "Ben Creech's blog" # Site description. Used in meta description
+  copyright = "Ben Creech" # Footer copyright holder, otherwise will use site title
   opengraph = true # Enable OpenGraph if true
   twitter_cards = true # Enable Twitter Cards if true
   readmore = false # Show "Read more" button in list if true
   authorbox = true # Show authorbox at bottom of pages if true
   toc = true # Enable Table of Contents
-  post_navigation = true # Show post navigation at bottom of pages if true
-  postSections = ["post"] # the section pages to show on home page and the "Recent articles" widget
-  #postSections = ["blog", "news"] # alternative that shows more than one section's pages
-  #dateformat = "2006-01-02" # change the format of dates
-  #mathjax = true # Enable MathJax
-  #mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" # Specify MathJax path
-  #mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config
+  mainSections = ["post"] # the section pages to show on home page and the "Recent articles" widget
+  dateformat = "2006-01-02" # Change the format of dates
+  mathjax = true # Enable MathJax
+  mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js" # Specify MathJax path
+  mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config
+  highlightColor = "#e22d30" # Override highlight color
+  customCSS = ["css/custom.css"] # Include custom CSS files
+  customJS = ["js/custom.js"] # Include custom JS files
 
 [Params.sidebar]
   home = "right" # Configure layout for home page
   list = "left"  # Configure layout for list pages
   single = false # Configure layout for single pages
   # Enable widgets in given order
-  widgets = ["search", "recent", "categories", "taglist", "social"]
+  widgets = ["search", "recent", "categories", "taglist", "social", "languages"]
 
 [Params.widgets]
   recent_num = 5 # Set the number of articles in the "Recent articles" widget
@@ -41,6 +43,7 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
 [Params.widgets.social]
   # Enable parts of social widget
   facebook = "bpcreech"
+  instagram = "bencreech"
   linkedin = "bpcreech"
   github = "bpcreech"
   email = "hi@bpcreech.com"

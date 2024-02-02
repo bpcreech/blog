@@ -22,6 +22,7 @@ jobs:
       - name: Set up CNAME
         run: |
           echo bpcreech.com > ./public/CNAME
+          echo "This site is generated from github.com/bpcreech/blog" > ./public/README
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

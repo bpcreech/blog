@@ -41,10 +41,6 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
 [Params.widgets.social]
   # Enable parts of social widget
   facebook = "bpcreech"
-  twitter = "bpcreech"
   linkedin = "bpcreech"
-  telegram = "bpcreech"
   github = "bpcreech"
-  gitlab = "bpcreech"
-  email = "bpcreech@gmail.com"
-  google_plus = "profileid"
+  email = "hi@bpcreech.com"

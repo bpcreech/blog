@@ -1,11 +1,10 @@
 ---
 title: "Hi!"
 date: "2024-02-02"
-description: "Allow me to introduce myself"
 # thumbnail: "img/placeholder.jpg" # Optional, thumbnail
-lead: "I'm a blog sans database"
+lead: "Allow me to introduce myself"
 disable_comments: false # Optional, disable Disqus comments if true
-authorbox: true # Optional, enable authorbox for specific post
+authorbox: false # Optional, enable authorbox for specific post
 toc: true # Optional, enable Table of Contents for specific post
 mathjax: true # Optional, enable MathJax for specific post
 categories:
@@ -13,6 +12,10 @@ categories:
 tags:
   - "intro"
 ---
+
+I'm a blog sans database
+
+<!--more-->
 
 ## This site
 
@@ -26,6 +29,6 @@ This is a static site which [lives on Github](https://github.com/bpcreech/blog) 
 
 My name is Ben! I live in the part of NYC we call "Jersey City" with my lovely wife and two [sentient mops](https://www.reddit.com/r/ProperAnimalNames/comments/10tal63/sentient_mop/). I like science fiction, jazz, and programming the machines who will, one day soon, [feed us and clothe us and compose our smooth jazz](https://www.youtube.com/watch?v=3meRSfFsCkc).
 
-I'm a Software Engineer, in the ~dark~ management side of the business since 2014.
+I'm a Software Engineer, in the ~~dark~~ management side of the business since 2014.
 
 You can find my resume at http://tinyurl.com/bpcreech.

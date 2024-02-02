@@ -1,36 +1,32 @@
 name: publish
 run-name: ${{ github.actor }} is publishing stuff
-on: [push]
+on: push
 jobs:
-  job_id:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
     steps:
-    - id: 'checkout'
-      uses: 'actions/checkout@v4'
+      - name: Git checkout
+        uses: actions/checkout@v2
 
-    - name: Retrieve theme
-      run: git submodule update --init --recursive
+      - name: Retrieve theme
+        run: git submodule update --init --recursive
 
-    - name: Set up hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: "0.92.2"
+      - name: Setup hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.92.2"
 
-    - name: Build
-      run: hugo --minify
+      - name: Build
+        run: hugo --minify
 
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v2'
-      with:
-        project_id: 'bpcreech-test-1'
-        workload_identity_provider: 'projects/433482736901/locations/global/workloadIdentityPools/github/providers/blog'
-
-    - id: 'upload-folder'
-      uses: 'google-github-actions/upload-cloud-storage@v2'
-      with:
-        path: 'public'
-        destination: 'www.bpcreech.com'
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.TOKEN }}
+          external_repository: bpcreech/bpcreech.github.io
+          publish_dir: ./public
+          #   keep_files: true
+          user_name: bpcreech
+          user_email: hi@bpcreech.com
+          publish_branch: master
+        #   cname: example.com

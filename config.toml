@@ -47,3 +47,9 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
   linkedin = "bpcreech"
   github = "bpcreech"
   email = "hi@bpcreech.com"
+
+[Params.widgets.search]
+  url = "https://google.com/search"
+  [Params.widgets.search.input]
+    name = "sitesearch"
+    pre = ""

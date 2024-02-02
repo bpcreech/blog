@@ -52,4 +52,4 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
   url = "https://google.com/search"
   [Params.widgets.search.input]
     name = "sitesearch"
-    pre = ""
+    pre = "bpcreech.com/"

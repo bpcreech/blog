@@ -1,3 +1,3 @@
-This is a (so far) experimental blog combining github webhooks, a go-swagger http api, hugo static site generation, and google cloud storage.
+This is an experimental blog using hugo static site generation with Github actions to publish to bpcreech.com.
 
-The point is that commits to master are immediately rendered via hugo and uploaded.
+Commits to the master branch are immediately published.

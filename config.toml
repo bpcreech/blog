@@ -1,5 +1,5 @@
 baseurl = "/"
-title = "Blogopotamus"
+title = "Disparate Treasures"
 languageCode = "en-us"
 paginate = "10" # Number of posts per page
 theme = "mainroad"
@@ -12,8 +12,8 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
   avatar = "img/avatar.png"
 
 [Params]
-  subtitle = "Ben Creech's blog" # Subtitle of your site. Used in site header
-  description = "Ben Creech's blog" # Site description. Used in meta description
+  subtitle = "Ben Creech's random stuff" # Subtitle of your site. Used in site header
+  description = "Disparate junk ⇨ disparate treasures" # Site description. Used in meta description
   copyright = "Ben Creech" # Footer copyright holder, otherwise will use site title
   opengraph = true # Enable OpenGraph if true
   twitter_cards = true # Enable Twitter Cards if true

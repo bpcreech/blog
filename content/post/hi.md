@@ -13,7 +13,7 @@ tags:
   - "intro"
 ---
 
-I'm a blog sans database.
+I'm a blog sans database?
 
 <!--more-->
 

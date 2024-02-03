@@ -33,5 +33,5 @@ jobs:
           #   keep_files: true
           user_name: bpcreech
           user_email: hi@bpcreech.com
-          publish_branch: master
+          publish_branch: main
         #   cname: example.com

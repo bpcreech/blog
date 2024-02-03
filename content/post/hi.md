@@ -27,7 +27,7 @@ This is a static site whose source [lives on Github](https://github.com/bpcreech
 
 ## Me
 
-My name is Ben! I live in the part of NYC we call "Jersey City" with my lovely wife and two [sentient mops](https://www.reddit.com/r/ProperAnimalNames/comments/10tal63/sentient_mop/). I like science fiction, jazz, and programming the machines who will, one day soon, [feed us and clothe us and compose our smooth jazz](https://www.youtube.com/watch?v=3meRSfFsCkc).
+My name is Ben! I live in the part of NYC we call "Jersey City" with my lovely wife and two [sentient mops](https://www.reddit.com/r/ProperAnimalNames/comments/10tal63/sentient_mop/). I like science fiction, jazz, running, and programming the machines who will, one day soon, [feed us and clothe us and compose our smooth jazz](https://www.youtube.com/watch?v=3meRSfFsCkc).
 
 I'm a Software Engineer, in the ~~dark~~ management side of the business since 2014.
 

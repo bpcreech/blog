@@ -34,8 +34,12 @@ Yay, highly-scalable web hosting for just the cost of $12/year from Google Domai
 <p style="text-align: center;">
   
 <style>
-td, th {
+td, th, table {
    border: none!important;
+   border-left: none!important;
+   border-right: none!important;
+   border-top: none!important;
+   border-bottom: none!important;
 }
 </style>
 

@@ -15,5 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "prettier": "^3.2.5"
+  },
+  "prettier": {
+    "proseWrap": "always"
   }
 }

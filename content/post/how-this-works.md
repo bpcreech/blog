@@ -31,15 +31,8 @@ tags:
 
 Yay, highly-scalable web hosting for just the cost of $12/year for a custom domain! (Within, you know, [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) *including that you don't mind your source being public*.)
 
-<style>
-td, th {
-   border: none!important;
-}
-
 | ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
 |---|---|
-
-</style>
 
 ## Alternative considered: Google Cloud Platform
 
@@ -56,7 +49,7 @@ This worked! But several ways in which it wasn't as good:
 
 ### More complicated, more maintenance
 
-Running your own GKE cluster can involve some maintenance and actual $ costs. Github Actions was launched [just a month after I originally set this up](https://techcrunch.com/2018/10/16/github-launches-actions-its-workflow-automation-tool) and is far easier to set up and maintain. Github Actions is much easier within the confines of what I want (including, e.g., that I don't have much in the way of expectations around availability which [has been problematic](https://www.githubstatus.com/history) on Github Actions, and the "build" operations I'm running are cheap enough to be free).
+Running your own GKE cluster can involve some maintenance and actual $ costs. Github Actions was [launched in October 2018](https://techcrunch.com/2018/10/16/github-launches-actions-its-workflow-automation-tool) just a month after I originally set this up. It's far easier to set up and maintain within the confines of what I want (including, e.g., that I don't have much in the way of expectations around availability which [has been problematic](https://www.githubstatus.com/history) on Github Actions, and the "build" operations I'm running are cheap enough to be free).
 
 If I were to redo this *without* Github Actions I'd use [Google Cloud Run](https://cloud.google.com/run) (i.e., containerized serverless) along with [this fancy new Workload Identity Pool authn scheme](https://github.com/google-github-actions/auth?tab=readme-ov-file#direct-wif) in lieu of shared secrets. (I played with this too recently. It works! It's super cool! It's not worth it for this.)
 

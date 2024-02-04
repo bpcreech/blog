@@ -12,7 +12,7 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
   avatar = "img/avatar.png"
 
 [Params]
-  subtitle = "Ben Creech's random stuff" # Subtitle of your site. Used in site header
+  subtitle = "Ben Creech's arbitrary stuff" # Subtitle of your site. Used in site header
   description = "Disparate junk ⇨ disparate treasures" # Site description. Used in meta description
   copyright = "Ben Creech" # Footer copyright holder, otherwise will use site title
   opengraph = true # Enable OpenGraph if true

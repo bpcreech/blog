@@ -32,7 +32,7 @@ tags:
 Yay, highly-scalable web hosting for just the cost of $12/year for a custom domain! (Within, you know, [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) *including that you don't mind your source being public*.)
 
 | ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
-|---|---|
+|Yay, `https` works!|Thanks, Let's Encrypt!|
 
 ## Alternative considered: Google Cloud Platform
 

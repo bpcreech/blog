@@ -111,7 +111,7 @@ Google
 [used to host instructions](https://web.archive.org/web/20180112010509/https://cloud.google.com/storage/docs/hosting-static-website)
 for serving a static site from Google Cloud Storage (GCS) by simply pointing
 your domain's `A` and `AAAA` records to a GCS VIP. The servers behind the GCS
-VIP, which presumably got requests for a gazillion different buckets, would then
+VIP, which get requests for a gazillion different buckets, would then
 use some form of [vhosting](https://en.wikipedia.org/wiki/Virtual_hosting) to
 identify which bucket to serve up.
 
@@ -132,7 +132,7 @@ instead, the
 [new host-your-site-from-GCS instructions](https://cloud.google.com/storage/docs/hosting-static-website)
 go with a more complex path of:
 
-1. Allocating a static VIP (presumably both IPv4 and IPv6),
+1. Allocating your own static VIP (probably both IPv4 and IPv6),
 2. Obtaining and generating your own cert, and
 3. Setting up the Google Cloud Load Balancer pointing that VIP to your bucket
    using your cert.

@@ -36,12 +36,14 @@ jobs:
           echo "This site is generated from github.com/bpcreech/blog" > ./public/README
 
       - name: Download asteroids
-        uses: actions/download-artifact@v4
+        uses: robinraju/release-downloader@v1.9
         with:
-          path: ./public/asteroids
+          out-file-path: ./public/asteroids
           repository: bpcreech/typescript-asteroids
-          merge-multiple: true
-          github-token: ${{ secrets.TOKEN }}
+          # github-token: ${{ secrets.TOKEN }}
+          latest: true
+          tarBall: true
+          extract: true
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

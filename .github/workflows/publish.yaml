@@ -41,6 +41,7 @@ jobs:
           path: ./public/asteroids
           repository: bpcreech/typescript-asteroids
           merge-multiple: true
+          github-token: ${{ secrets.TOKEN }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

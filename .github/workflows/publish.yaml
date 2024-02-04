@@ -19,9 +19,8 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      - name: Set up CNAME
+      - name: Add README
         run: |
-          echo bpcreech.com > ./public/CNAME
           echo "This site is generated from github.com/bpcreech/blog" > ./public/README
 
       - name: Deploy
@@ -34,4 +33,4 @@ jobs:
           user_name: bpcreech
           user_email: hi@bpcreech.com
           publish_branch: main
-        #   cname: example.com
+          cname: example.com

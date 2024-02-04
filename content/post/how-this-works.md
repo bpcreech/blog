@@ -59,7 +59,6 @@ table, td, th {
 }
 </style>
 
-
 | ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
 | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | <p style="text-align: center;">Hooray, `https` works!</p>                              | <p style="text-align: center;">Thanks, Let's Encrypt!</p>                     |

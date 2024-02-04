@@ -13,7 +13,7 @@
   },
   "author": "hi@bpcreech.com",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "prettier": "^3.2.5"
   }
 }

@@ -51,9 +51,20 @@ Domains for a custom domain! (Within, you know,
 [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages)
 _including that you don't mind your source being public_.)
 
+<div>
+
+<style>
+table, td, th {
+   border: none!important;
+}
+</style>
+
+
 | ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
 | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | <p style="text-align: center;">Hooray, `https` works!</p>                              | <p style="text-align: center;">Thanks, Let's Encrypt!</p>                     |
+
+</div>
 
 ## Alternative considered: Google Cloud Platform
 

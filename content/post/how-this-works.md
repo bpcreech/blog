@@ -39,9 +39,9 @@ by Arnab Kumar Shil shows how to:
    redirect traffic from bpcreech.com to bpcreech.github.io at the DNS layer.
 
    - One cool part about this which I wasn't expecting: Github pages
-     [automatically obtains](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https) a [Let's Encrpyt](https://letsencrypt.org/)
-     certificate for domains you configure this way. So I didn't even have to
-     generate a certificate!
+     [automatically obtains](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https)
+     a [Let's Encrpyt](https://letsencrypt.org/) certificate for domains you
+     configure this way. So I didn't even have to generate a certificate!
 
 5. Speaking of DNS, in my case the DNS layer is managed by Google Domains...
    [which is over time becoming SquareSpace domains](https://blog.pragmaticengineer.com/google-domains-to-shut-down).

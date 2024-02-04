@@ -29,10 +29,10 @@ tags:
 
 6. Speaking of DNS, in my case the DNS layer is managed by Google Domains... [which is over time becoming SquareSpace domains](https://blog.pragmaticengineer.com/google-domains-to-shut-down).
 
-Yay, highly-scalable web hosting for just the cost of $12/year for a custom domain! (Within, you know, [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) *including that you don't mind your source being public*.)
+Yay, highly-scalable web hosting for just the cost of $12/year from Google Domains for a custom domain! (Within, you know, [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) *including that you don't mind your source being public*.)
 
 | ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
-|Yay, `https` works!|Thanks, Let's Encrypt!|
+|Hooray, `https` works!|Thanks, Let's Encrypt!|
 
 ## Alternative considered: Google Cloud Platform
 

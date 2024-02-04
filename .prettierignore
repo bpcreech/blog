@@ -1,0 +1,2 @@
+# don't format themes (which are git submodules):
+themes

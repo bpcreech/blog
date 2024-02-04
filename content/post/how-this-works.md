@@ -111,9 +111,9 @@ Google
 [used to host instructions](https://web.archive.org/web/20180112010509/https://cloud.google.com/storage/docs/hosting-static-website)
 for serving a static site from Google Cloud Storage (GCS) by simply pointing
 your domain's `A` and `AAAA` records to a GCS VIP. The servers behind the GCS
-VIP, which get requests for a gazillion different buckets, would then
-use some form of [vhosting](https://en.wikipedia.org/wiki/Virtual_hosting) to
-identify which bucket to serve up.
+VIP, which get requests for a gazillion different buckets, would then use some
+form of [vhosting](https://en.wikipedia.org/wiki/Virtual_hosting) to identify
+which bucket to serve up.
 
 This is, presumably, similar to how Github pages work today.
 

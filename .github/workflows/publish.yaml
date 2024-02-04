@@ -38,6 +38,7 @@ jobs:
       - name: Download asteroids
         uses: actions/download-artifact@v4
         with:
+          name: production-files
           path: ./public/asteroids
           repository: bpcreech/typescript-asteroids
           merge-multiple: true

@@ -12,7 +12,7 @@ tags:
   - "how-this-works"
 ---
 
-**TL;DR**: [github.com/bpcreech/blog](https://github.com/bpcreech/blog) ⇨ [Hugo](https://gohugo.io/) (via Github actions) ⇨ [github.com/bpcreech.github.io](https://github.com/bpcreech.github.io) ⇨ Github pages. With DNS mapped via Google Domains (soon, RIP).
+**TL;DR**: [github.com/bpcreech/blog](https://github.com/bpcreech/blog) ⇨ [Hugo](https://gohugo.io/) (via Github actions) ⇨ [github.com/bpcreech.github.io](https://github.com/bpcreech.github.io) ⇨ Github pages. With DNS mapped via Google Domains (soon, [RIP](https://blog.pragmaticengineer.com/google-domains-to-shut-down)).
 
 <!--more-->
 

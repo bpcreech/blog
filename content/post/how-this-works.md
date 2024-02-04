@@ -53,7 +53,7 @@ _including that you don't mind your source being public_.)
 
 | ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
 | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| <p style="text-align: center;">Hooray, `https` works!</p>                                                                 | <p style="text-align: center;">Thanks, Let's Encrypt!</p>                                                        |
+| <p style="text-align: center;">Hooray, `https` works!</p>                              | <p style="text-align: center;">Thanks, Let's Encrypt!</p>                     |
 
 ## Alternative considered: Google Cloud Platform
 

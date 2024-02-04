@@ -31,11 +31,15 @@ tags:
 
 Yay, highly-scalable web hosting for just the cost of $12/year for a custom domain! (Within, you know, [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) *including that you don't mind your source being public*.)
 
-<p style="text-align: center;">
-  
-![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png)
+<style>
+td, th {
+   border: none!important;
+}
 
-</p>
+| ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
+|---|---|
+
+</style>
 
 ## Alternative considered: Google Cloud Platform
 
@@ -62,20 +66,20 @@ A GKE cluster and GCS bucket, like many things on Google Cloud, can generate unb
 
 Now, you can set up a [Cloud Function which checks and disables billing](https://cloud.google.com/billing/docs/how-to/notify). I played with this. It's not terribly hard to get working, but you need to test it carefully, because the consequencies if it fails are, again, [dire](https://news.ycombinator.com/item?id=25398148)). That makes me nervous, so no thanks, for now.
 
-### The cheap flavor of serving a static site from Cloud Storage is ~deprecated because no HTTPS
+### The simple & cheap flavor of serving a static site from Cloud Storage is ~deprecated because no HTTPS
 
 Google [used to host instructions](https://web.archive.org/web/20180112010509/https://cloud.google.com/storage/docs/hosting-static-website) for serving a static site from Google Cloud Storage (GCS) by simply pointing your domain's `A` and `AAAA` records to a GCS VIP. The servers behind the GCS VIP, which presumably got requests for a gazillion different buckets, would then use some form of [vhosting](https://en.wikipedia.org/wiki/Virtual_hosting) to identify which bucket to serve up.
 
-This is, presumably, what Github pages do today.
+This is, presumably, similar to how Github pages work today.
 
-The problem was that [this only worked for plaintext `http` (not `https`)](https://web.archive.org/web/20170327185149/https://cloud.google.com/storage/docs/static-website#https). It looks like Google never did the magic trick that Github Pages do today of dynamically provisioning a cert (using Let's Encrypt). You could argue that this silly blog doesn't need `https` but it's just [not the way winds are going](https://blog.chromium.org/2023/08/towards-https-by-default.html), and it's not surprising that Google silently removed these old vhosting-oriented instructions.
+The problem was that [this only worked for plaintext `http` (not `https`)](https://web.archive.org/web/20170327185149/https://cloud.google.com/storage/docs/static-website#https). It looks like Google never did the magic trick that Github Pages do today of dynamically provisioning a cert (using Let's Encrypt). You could argue that this silly blog doesn't need `https` but it's [not on the right side of history](https://blog.chromium.org/2023/08/towards-https-by-default.html), and so it's not surprising that Google has removed these old vhosting-oriented instructions.
 
-They *could* have gone with the Let's Encrypt path, but instead the [new host-your-site-from-GCS instructions](https://cloud.google.com/storage/docs/hosting-static-website) go with a more complex path of:
+They *could* have gone with a Github-Pages-like Let's Encrypt path, by setting up a place to declare a desire for Google to go provision a cert for you, but instead, the [new host-your-site-from-GCS instructions](https://cloud.google.com/storage/docs/hosting-static-website) go with a more complex path of:
 
 1. Allocating a static VIP (presumably both IPv4 and IPv6),
 2. Obtaining and generating your own cert, and
 3. Setting up the Google Cloud Load Balancer pointing that VIP to your bucket using your cert.
 
-This is more flexible and powerful, but it's more complicated. The fact that it uses a static VIP means you need to pay for an ever-diminishing and thus [ever-more-costly resource](https://cloud.google.com/vpc/network-pricing#ipaddress). (As of this writing, unused IPv4 addresses cost $113, and AFAICT ones mapped to GCS buckets are free?! I assume that will change eventually as [availability dwindles](https://ipv4.potaroo.net/).)
+This is more flexible and powerful (way more knobs to play with on both the cert and the load balancer!), but it's more complicated. The fact that it uses a static VIP means you need to pay for an ever-diminishing and thus [ever-more-costly resource](https://cloud.google.com/vpc/network-pricing#ipaddress). (As of this writing, unused IPv4 addresses cost $113, and AFAICT ones mapped to GCS buckets are free?! I assume that will change eventually as [availability dwindles](https://ipv4.potaroo.net/).)
 
 I suppose that once IPv4 is sufficiently exhausted, after the ensuing chaos, everyone's crappy ISP will finally support IPv6 it will be more reasonable to just generate free static IPv6 VIPs (forgoing IPv4), and then dispense with server-side tricks like vhosting to map multiple sites onto one address. In the meanwhile, "I just want to serve 4 TB from GCS" is a slightly more complicated and potentially not-quite-free.

@@ -31,6 +31,12 @@ tags:
 
 Yay, highly-scalable web hosting for just the cost of $12/year for a custom domain! (Within, you know, [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) *including that you don't mind your source being public*.)
 
+<p style="text-align: center;">
+  
+![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png)
+
+</p>
+
 ## Alternative considered: Google Cloud Platform
 
 *This is way too much info, just writing for my future reference I guess...*

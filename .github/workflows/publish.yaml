@@ -35,20 +35,13 @@ jobs:
         run: |
           echo "This site is generated from github.com/bpcreech/blog" > ./public/README
 
-        # uses: robinraju/release-downloader@v1.9
-        # with:
-        #   out-file-path: ./public/asteroids
-        #   repository: bpcreech/typescript-asteroids
-        #   # github-token: ${{ secrets.TOKEN }}
-        #   latest: true
-        #   tarBall: true
-        #   extract: true
-      - name: Download asteroids
-        uses: actions/download-artifact@v4
+      - name: Grab latest asteroids build
+        uses: robinraju/release-downloader@v1.9
         with:
-          name: production-files
-          github-token: ${{ secrets.TOKEN }} # token with actions:read permissions on target repo
+          out-file-path: ./public/asteroids
           repository: bpcreech/typescript-asteroids
+          latest: true
+          extract: true
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

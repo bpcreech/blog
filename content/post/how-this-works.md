@@ -12,13 +12,13 @@ tags:
   - "how-this-works"
 ---
 
-**TL;DR**: [github.com/bpcreech/blog](https://github.com/bpcreech/blog) ⇨ [Hugo](https://gohugo.io/) (via Github actions) ⇨ [github.com/bpcreech.github.io](https://github.com/bpcreech.github.io) ⇨ Github pages. With DNS mapped via Google Domains (soon, RIP)
+**TL;DR**: [github.com/bpcreech/blog](https://github.com/bpcreech/blog) ⇨ [Hugo](https://gohugo.io/) (via Github actions) ⇨ [github.com/bpcreech.github.io](https://github.com/bpcreech.github.io) ⇨ Github pages. With DNS mapped via Google Domains (soon, RIP).
 
 <!--more-->
 
 ## Tell me more for some reason
 
-[This page](https://ruddra.com/hugo-deploy-static-page-using-github-actions/) by Arnab Kumar Shil shows how to:
+[This super awesome page](https://ruddra.com/hugo-deploy-static-page-using-github-actions/) by Arnab Kumar Shil shows how to:
 
 1. Start from [blog content in source form](https://github.com/bpcreech/blog) (mostly [Markdown](https://www.markdownguide.org/)) in one Github repo.
 2. [Configure](https://github.com/bpcreech/blog/blob/main/.github/workflows/publish.yaml) [Github Actions](https://github.com/features/actions) to automatically run the static site generator [Hugo](https://gohugo.io/) upon any commit and schlep that generatic content into [*another* Github repo](https://github.com/bpcreech/bpcreech.github.io).
@@ -31,7 +31,7 @@ tags:
 
 Yay, highly-scalable web hosting for just the cost of $12/year for a custom domain! (Within, you know, [limits](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) *including that you don't mind your source being public*.)
 
-## Alternatives considered
+## Alternative considered: Google Cloud Platform
 
 *This is way too much info, just writing for my future reference I guess...*
 
@@ -46,7 +46,7 @@ This worked! But several ways in which it wasn't as good:
 
 ### More complicated, more maintenance
 
-Running your own GKE cluster can involve some maintenance and costs. Github Actions was launched [just a month after I originally set this up](https://techcrunch.com/2018/10/16/github-launches-actions-its-workflow-automation-tool) and is far easier to set up and maintain. Github Actions is much easier within the confines of what I want (including, e.g., that I don't have much in the way of expectations around availability which [has been problematic](https://www.githubstatus.com/history) on Github Actions, and the "build" operations I'm running are cheap enough to be free).
+Running your own GKE cluster can involve some maintenance and actual $ costs. Github Actions was launched [just a month after I originally set this up](https://techcrunch.com/2018/10/16/github-launches-actions-its-workflow-automation-tool) and is far easier to set up and maintain. Github Actions is much easier within the confines of what I want (including, e.g., that I don't have much in the way of expectations around availability which [has been problematic](https://www.githubstatus.com/history) on Github Actions, and the "build" operations I'm running are cheap enough to be free).
 
 If I were to redo this *without* Github Actions I'd use [Google Cloud Run](https://cloud.google.com/run) (i.e., containerized serverless) along with [this fancy new Workload Identity Pool authn scheme](https://github.com/google-github-actions/auth?tab=readme-ov-file#direct-wif) in lieu of shared secrets. (I played with this too recently. It works! It's super cool! It's not worth it for this.)
 

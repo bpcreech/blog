@@ -19,7 +19,7 @@ I'm a blog sans database?
 
 ## This site
 
-You have happened across Ben Creech's web presence. This web presence is currently in blog form, which implies content will appear here with a regularity which I can assure you *is highly unlikely to occur*.
+You have happened across Ben Creech's web presence. This web presence is currently in blog form, which implies content will appear here with a regularity which I can assure you *is highly unlikely to obtain*.
 
 Mostly this is just a place for me to throw stuff on the interwebs.
 

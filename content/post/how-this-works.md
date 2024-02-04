@@ -37,11 +37,12 @@ Yay, highly-scalable web hosting for just the cost of $12/year from Google Domai
 td, th {
    border: none!important;
 }
-</style>
 
 | ![A browser pointing at bpcreech.com, showing https enabled](/img/i-can-has-https.png) | ![Cert details listing Let's Encrypt as the authority](/img/lets-encrypt.png) |
 |----------------------|----------------------|
 |Hooray, `https` works!|Thanks, Let's Encrypt!|
+
+</style>
 
 </p>
 

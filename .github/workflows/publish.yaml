@@ -33,4 +33,4 @@ jobs:
           user_name: bpcreech
           user_email: hi@bpcreech.com
           publish_branch: main
-          cname: example.com
+          cname: bpcreech.com

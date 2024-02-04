@@ -4,7 +4,7 @@ date: "2024-02-02"
 # thumbnail: "img/placeholder.jpg" # Optional, thumbnail
 lead: "Allow me to introduce myself"
 disable_comments: false # Optional, disable Disqus comments if true
-authorbox: false # Optional, enable authorbox for specific post
+authorbox: true # Optional, enable authorbox for specific post
 toc: true # Optional, enable Table of Contents for specific post
 mathjax: true # Optional, enable MathJax for specific post
 categories:

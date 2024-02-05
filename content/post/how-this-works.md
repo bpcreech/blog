@@ -37,19 +37,19 @@ by Arnab Kumar Shil shows how to:
    with that content.
 
    ```goat
-   .--------------------------.    .----------------------------.    
-   |                          |    | Github actions:            |    
+   .--------------------------.    .----------------------------.
+   |                          |    | Github actions:            |
    | github.com/bpcreech/blog +--->| Format markdown, Run Hugo, +
-   |                          |    | Commit to next...          |    
-   '--------------------------'    '--------------+-------------'    
+   |                          |    | Commit to next...          |
+   '--------------------------'    '--------------+-------------'
                                                   |
                                                   v
-  .--------------------.  .----------------------------------------.
-  | bpcreech.github.io |<-+ github.com/bpcreech/bpcreech.github.io |
-  '--------------------'  '----------------------------------------'
+   .--------------------.  .----------------------------------------.
+   | bpcreech.github.io |<-+ github.com/bpcreech/bpcreech.github.io |
+   '--------------------'  '----------------------------------------'
    ```
-   
-5. We can also, thanks to Github Pages'
+
+4. We can also, thanks to Github Pages'
    [custom domains feature](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages),
    redirect traffic from [bpcreech.com](https://bpcreech.com) to
    [bpcreech.github.io](https://bpcreech.github.io) at the DNS layer.
@@ -59,7 +59,7 @@ by Arnab Kumar Shil shows how to:
      a [Let's Encrypt](https://letsencrypt.org/) certificate for domains you
      configure this way. So I didn't even have to generate a certificate!
 
-6. Speaking of DNS, in my case the DNS layer is managed by Google Domains...
+5. Speaking of DNS, in my case the DNS layer is managed by Google Domains...
    [which is over time becoming SquareSpace domains](https://blog.pragmaticengineer.com/google-domains-to-shut-down).
 
 Yay, highly-scalable web hosting for just the cost of $12/year from Google

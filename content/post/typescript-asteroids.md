@@ -39,7 +39,8 @@ to reset my brain, for years since he first published it back in 2010.
   
 ![An original Asteroids "Cocktail"-style tabletop game](/img/asteroids-cocktail.jpg) </p>
 
-*An original Asteroids "Cocktail"-style tabletop game; [source](https://arcadespecialties.com/arcade-games-for-sale/vintage-arcade-games/asteroids-cocktail/)*
+_An original Asteroids "Cocktail"-style tabletop game;
+[source](https://arcadespecialties.com/arcade-games-for-sale/vintage-arcade-games/asteroids-cocktail/)_
 
 </div>
 

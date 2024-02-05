@@ -33,10 +33,10 @@ by Arnab Kumar Shil shows how to:
    schlep that generatic content into
    [_another_ Github repo](https://github.com/bpcreech/bpcreech.github.io).
 3. From _there_ the built-in [Github Pages](https://pages.github.com/) Github
-   Actions automatically update bpcreech.github.io with that content.
+   Actions automatically update [bpcreech.github.io](https://bpcreech.github.io) with that content.
 4. We can also, thanks to Github Pages'
    [custom domains feature](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages),
-   redirect traffic from bpcreech.com to bpcreech.github.io at the DNS layer.
+   redirect traffic from [bpcreech.com](https://bpcreech.com) to [bpcreech.github.io](https://bpcreech.github.io) at the DNS layer.
 
    - One cool part about this which I wasn't expecting: Github pages
      [automatically obtains](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https)

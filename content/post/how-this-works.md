@@ -49,8 +49,8 @@ by Arnab Kumar Shil shows how to:
    | Upload             |<-+ github.com/bpcreech/bpcreech.github.io |
    | Deploy             |  |                                        |
     '---------+--------'   +----------------------------------------+
-             |
-             v
+              |
+              v
    +--------------------+
    | bpcreech.github.io |
    +--------------------+

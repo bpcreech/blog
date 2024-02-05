@@ -22,10 +22,9 @@ it's live [here](https://bpcreech.com/asteroids/)!
 
 ## Asteroids
 
-[Asteroids](https://www.arcade-museum.com/Videogame/asteroids) is one of my
-favorite video games. Many years ago, the daycare I grew up in (!) had an
-original tabletop Asteroids game for us munchkins to play with. I spent hours on
-that thing instead of playing sportsball or getting vitamin D. Asteroids is
+[Asteroids](https://www.arcade-museum.com/Videogame/asteroids) is one of my favorite video games. Many years ago, the daycare I grew up in (!) had
+an original tabletop Asteroids game for us munchkins to play with. I spent
+hours on that thing instead of playing sportsball or getting vitamin D. Asteroids is
 super cool in both its simplicity, and its use of vector graphics—as in, the
 original CRT didn't just do the horizontal scan thing; the tube traced out the
 vector pattern on the screen, resulting in things like small shapes showing up
@@ -35,17 +34,13 @@ So I have spent random minutes playing
 [Doug McInnes's JS asteroids clone](https://github.com/dmcinnes/HTML5-Asteroids)
 to reset my brain, for years since he first published it back in 2010.
 
-<p style="text-align: center;">
+<p style="text-align: center;">![An original Asteroids "Cocktail"-style tabletop game](/img/asteroids-cocktail.jpg)</p>
 
-![An original Asteroids "Cocktail"-style tabletop game](/img/asteroids-cocktail.jpg)
-
-[source](https://arcadespecialties.com/arcade-games-for-sale/vintage-arcade-games/asteroids-cocktail/)
-
-</p>
+<p style="text-align: center;">An original Asteroids "Cocktail"-style tabletop game; [source](https://arcadespecialties.com/arcade-games-for-sale/vintage-arcade-games/asteroids-cocktail/)</p>
 
 ## TypeScriptification
 
-I wanted to play with ML reinforcement learning (more on that later), which
+I wanted to play with ML reinforcement learning (more on that below), which
 requires me first to do some code refactoring on the game. Notably, to do
 training I want to be able to programmatically:
 

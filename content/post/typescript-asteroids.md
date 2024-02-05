@@ -35,9 +35,13 @@ So I have spent random minutes playing
 [Doug McInnes's JS asteroids clone](https://github.com/dmcinnes/HTML5-Asteroids)
 to reset my brain, for years since he first published it back in 2010.
 
-<p style="text-align: center;"> ![An original Asteroids "Cocktail"-style tabletop game](/img/asteroids-cocktail.jpg) </p>
+<div style="text-align: center;">
+  
+![An original Asteroids "Cocktail"-style tabletop game](/img/asteroids-cocktail.jpg) </p>
 
-<p style="text-align: center;"> An original Asteroids "Cocktail"-style tabletop game; [source](https://arcadespecialties.com/arcade-games-for-sale/vintage-arcade-games/asteroids-cocktail/) </p>
+*An original Asteroids "Cocktail"-style tabletop game; [source](https://arcadespecialties.com/arcade-games-for-sale/vintage-arcade-games/asteroids-cocktail/)*
+
+</div>
 
 ## TypeScriptification
 

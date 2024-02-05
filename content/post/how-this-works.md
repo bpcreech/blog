@@ -35,17 +35,31 @@ by Arnab Kumar Shil shows how to:
 3. From _there_ the built-in [Github Pages](https://pages.github.com/) Github
    Actions automatically update [bpcreech.github.io](https://bpcreech.github.io)
    with that content.
-4. We can also, thanks to Github Pages'
+
+   ```goat
+   .--------------------------.    .----------------------------.    
+   |                          |    | Github actions:            |    
+   | github.com/bpcreech/blog +--->| Format markdown, Run Hugo, +
+   |                          |    | Commit to next...          |    
+   '--------------------------'    '--------------+-------------'    
+                                                  |
+                                                  v
+  .--------------------.  .----------------------------------------.
+  | bpcreech.github.io |<-+ github.com/bpcreech/bpcreech.github.io |
+  '--------------------'  '----------------------------------------'
+   ```
+   
+5. We can also, thanks to Github Pages'
    [custom domains feature](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages),
    redirect traffic from [bpcreech.com](https://bpcreech.com) to
    [bpcreech.github.io](https://bpcreech.github.io) at the DNS layer.
 
    - One cool part about this which I wasn't expecting: Github pages
      [automatically obtains](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https)
-     a [Let's Encrpyt](https://letsencrypt.org/) certificate for domains you
+     a [Let's Encrypt](https://letsencrypt.org/) certificate for domains you
      configure this way. So I didn't even have to generate a certificate!
 
-5. Speaking of DNS, in my case the DNS layer is managed by Google Domains...
+6. Speaking of DNS, in my case the DNS layer is managed by Google Domains...
    [which is over time becoming SquareSpace domains](https://blog.pragmaticengineer.com/google-domains-to-shut-down).
 
 Yay, highly-scalable web hosting for just the cost of $12/year from Google

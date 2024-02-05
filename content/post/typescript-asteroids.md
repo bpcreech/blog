@@ -1,7 +1,7 @@
 ---
 title: "TypeScript Asteroids"
 date: "2024-02-04"
-lead: "TypeScript Asteroids"
+lead: "let pew: Pew = new Pew();"
 disable_comments: false # Optional, disable Disqus comments if true
 authorbox: true # Optional, enable authorbox for specific post
 toc: true # Optional, enable Table of Contents for specific post

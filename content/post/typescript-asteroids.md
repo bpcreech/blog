@@ -59,7 +59,9 @@ training I want to be able to programmatically:
    browser (for both simplicity and speed).
 
 I'm not a good enough JS programmer to safely refactor piles of raw JS, so ...
-[I converted it to TypeScript](https://bpcreech.com/asteroids)! I added some OOPyness here and there and generally cleaned up some of the code. More refactoring and cleanups to come...
+[I converted it to TypeScript](https://bpcreech.com/asteroids)! I added some
+OOPyness here and there and generally cleaned up some of the code. More
+refactoring and cleanups to come...
 
 This uses:
 

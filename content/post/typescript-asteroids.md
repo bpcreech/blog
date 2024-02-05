@@ -76,5 +76,5 @@ My weird idea is to replace the game's demo screen with a live machine-operated
 game, maybe operated by [TensorFlow.js](https://www.tensorflow.org/js). There
 has already
 [been extensive research in training robots to play Asteroids](https://www.gymlibrary.dev/environments/atari/asteroids/);
-what I'll try to do differently here is specifically train on this
+what I want to try differently here is specifically train on this
 browser-playable game.

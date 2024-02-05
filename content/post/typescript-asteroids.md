@@ -51,10 +51,11 @@ requires me first to do some code refactoring on the game. Notably, to do
 training I want to be able to programmatically:
 
 1. Reset the game,
-2. Single-step the game loop,
-3. Seed the RNG,
-4. Extract internal state for observation, and
-5. Decouple UI from business logic, so we can run the game logic without a full
+2. Seed the RNG,
+3. Single-step the game loop,
+4. Extract internal state for observation,
+5. Provide precise control inputs, and
+6. Decouple UI from business logic, so we can run the game logic without a full
    browser (for both simplicity and speed).
 
 I'm not a good enough JS programmer to safely refactor piles of raw JS, so ...

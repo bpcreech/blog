@@ -68,6 +68,8 @@ This uses:
 - [Prettier](https://prettier.io/) for formatting, and
 - [Github Actions](https://github.com/features/actions) for CI/CD.
 
+While all of this improves developer experience, the funny thing is: Doug's original JS Asteroids works unmodified 15 years later. It's highly unlikely this new one (which depends on all of the above, and NPM, and TypeScript itself) will work longer than a year without maintenance to handle changes in dependencies!
+
 ## ML reinforcement learning??
 
 **This is still a TODO and will get another post if I manage to operationalize

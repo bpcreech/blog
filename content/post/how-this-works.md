@@ -1,7 +1,7 @@
 ---
 title: "How this site works"
 date: "2024-02-03"
-lead: "How this site works"
+lead: "It's a series of tubes"
 disable_comments: false # Optional, disable Disqus comments if true
 authorbox: true # Optional, enable authorbox for specific post
 toc: true # Optional, enable Table of Contents for specific post

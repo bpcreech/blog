@@ -22,9 +22,10 @@ it's live [here](https://bpcreech.com/asteroids/)!
 
 ## Asteroids
 
-[Asteroids](https://www.arcade-museum.com/Videogame/asteroids) is one of my favorite video games. Many years ago, the daycare I grew up in (!) had
-an original tabletop Asteroids game for us munchkins to play with. I spent
-hours on that thing instead of playing sportsball or getting vitamin D. Asteroids is
+[Asteroids](https://www.arcade-museum.com/Videogame/asteroids) is one of my
+favorite video games. Many years ago, the daycare I grew up in (!) had an
+original tabletop Asteroids game for us munchkins to play with. I spent hours on
+that thing instead of playing sportsball or getting vitamin D. Asteroids is
 super cool in both its simplicity, and its use of vector graphics—as in, the
 original CRT didn't just do the horizontal scan thing; the tube traced out the
 vector pattern on the screen, resulting in things like small shapes showing up

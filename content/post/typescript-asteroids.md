@@ -87,4 +87,5 @@ has already
 what I want to try differently here is specifically train on this
 browser-playable game.
 
-Meanwhile, click [here](https://bpcreech.com/asteroids/) for the game as it is, in glorious modern TypeScript form.
+Meanwhile, click [here](https://bpcreech.com/asteroids/) for the game as it is,
+in glorious modern TypeScript form.

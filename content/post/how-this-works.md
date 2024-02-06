@@ -171,8 +171,8 @@ go with a more complex path of:
    using your cert.
 
 This is more flexible and powerful (way more knobs to play with on both the cert
-and the load balancer!), but it's more complicated. The fact that it uses a per-site
-static VIP means you need to pay for an ever-diminishing and thus
+and the load balancer!), but it's more complicated. The fact that it uses a
+per-site static VIP means you need to pay for an ever-diminishing and thus
 [ever-more-costly resource](https://cloud.google.com/vpc/network-pricing#ipaddress).
 (As of this writing, unused IPv4 addresses cost $113 / year, and AFAICT ones
 mapped to GCS buckets are free?! I assume that will change eventually as

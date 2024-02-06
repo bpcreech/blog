@@ -135,7 +135,7 @@ Now, you can set up a
 [Cloud Function which checks and disables billing](https://cloud.google.com/billing/docs/how-to/notify).
 I played with this. It's not terribly hard to get working, but you need to test
 it carefully, because the consequencies if it fails are, again,
-[dire](https://news.ycombinator.com/item?id=25372336)). That makes me nervous,
+[dire](https://news.ycombinator.com/item?id=25372336). That makes me nervous,
 so no thanks, for now.
 
 ### The simple & cheap flavor of serving a static site from Cloud Storage is ~deprecated because no HTTPS

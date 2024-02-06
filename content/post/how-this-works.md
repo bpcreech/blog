@@ -181,6 +181,6 @@ mapped to GCS buckets are free?! I assume that will change eventually as
 I suppose that once IPv4 is sufficiently exhausted, after the ensuing chaos,
 everyone's crappy ISP will finally support IPv6. Finally, it will be more
 reasonable to just generate free static IPv6 VIPs (forgoing IPv4), and then
-dispense with server-side tricks like vhosting to map multiple sites onto one
+dispense with server-side tricks like vhosting to map multiple sites onto one IP
 address. In the meanwhile, "I just want to serve 4 TB from GCS" is slightly more
 complicated and potentially not-quite-free.

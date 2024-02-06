@@ -166,12 +166,12 @@ instead, the
 go with a more complex path of:
 
 1. Allocating your own static VIP (probably both IPv4 and IPv6),
-2. Obtaining and generating your own cert, and
+2. Obtaining your own cert, and
 3. Setting up the Google Cloud Load Balancer pointing that VIP to your bucket
    using your cert.
 
 This is more flexible and powerful (way more knobs to play with on both the cert
-and the load balancer!), but it's more complicated. The fact that it uses a
+and the load balancer!), but it's more complicated. The fact that it uses a per-site
 static VIP means you need to pay for an ever-diminishing and thus
 [ever-more-costly resource](https://cloud.google.com/vpc/network-pricing#ipaddress).
 (As of this writing, unused IPv4 addresses cost $113 / year, and AFAICT ones

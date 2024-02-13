@@ -1,4 +1,3 @@
-This is an experimental blog using hugo static site generation with Github
-actions to publish to bpcreech.com.
+This is a blog using hugo static site generation.
 
-Commits to the master branch are immediately published.
+Commits to the main branch are immediately published to GitHub Pages, and accessible via bpcreech.com.

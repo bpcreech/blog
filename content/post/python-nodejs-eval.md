@@ -55,7 +55,8 @@ arbitrary JavaScript.
 ## Part A: NodeJS as a sidecar using `http-eval`
 
 So while it should be possible, and relatively _nice_, to run JavaScript
-directly within the CPython process by simply embedding V8,
+directly within the CPython process by simply embedding [V8](https://v8.dev/) or
+[SpiderMonkey](https://spidermonkey.dev/),
 [attempts to do so](#alternatives-considered) are somewhat fraught in
 practice—_I couldn't get any to work._
 

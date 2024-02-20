@@ -168,9 +168,9 @@ Here's what I found:
 - [`PyMiniRacer`](https://github.com/sqreen/PyMiniRacer): Minimalist V8 Python
   bindings created by Sqreen, whch was later
   [aquired by DataDog](https://www.datadoghq.com/about/latest-news/press-releases/datadog-signs-definitive-agreement-to-acquire-sqreen/).
-  - _TODO! I just discovered this while writing this blog post! This may still
-    work. There's not been a recent binary release, but it may still build from
-    sources..._
+  - _TODO! This hasn't been published since 2021, but the old wheel on PyPI
+    still works with v8 8.9. The build instructions currently fail, but maybe
+    this can be resuscitated with relatively little work._
 - [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/): Just
   run the whole Chromium browser as a subprocess from Python.
   - _Obviously works and used by zillions of folks, but seemed heavier-weight

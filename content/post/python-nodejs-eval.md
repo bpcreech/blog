@@ -48,8 +48,9 @@ made a _new_ thing!
 
 ```
 
-TL;DR: From NodeJS, we run a sidecar HTTP server on a Unix domain socket. We
-launch the NodeJS server from Python and hit it with requests.
+TL;DR: From Python, we launch a NodeJS sidecar process which runs an HTTP server
+on a Unix domain socket. We then hit that HTTP server with requests containing
+arbitrary JavaScript.
 
 ## Part A: NodeJS as a sidecar using `http-eval`
 

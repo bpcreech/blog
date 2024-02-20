@@ -15,10 +15,11 @@ tags:
 ---
 
 I wanted to call a pile of JavaScript (actually transpiled TypeScript) from
-Python, so I could run reinforcement learning on [this](./typescript-asteroids).
+Python, so I could run reinforcement learning on
+[this](/post/typescript-asteroids).
 
-I was dissatisfied with options for calling JS from Python, so I made a _new_
-thing!
+I was dissatisfied with the existing options for calling JS from Python, so I
+made a _new_ thing!
 
 <!--more-->
 
@@ -32,14 +33,14 @@ thing!
 ```goat
 +-----------------------+            +--------------------+
 | Python                |            | NodeJS             |
-| +------------------+  |    Unix    |   +--------------+ |
-| |    nodejs-eval   |------domain------>|  http-eval   | |
-| +---------+--------+  |   socket   |   +------+-------+ |
-|           |           |            |          |         |
-|           v           |            |  o . o . v . o . o |
-| +------------------+  |            |  .  Arbitrary  o . |
-| |    nodejs-bin    +-------exec--->|  o  JavaScript . o |
-| +---------+--------+  |            |  . o . o . o . o . |
+| +------------------+  |            |   +--------------+ |
+| |    nodejs-eval   |------------------>|  http-eval   | |
+| +---------+--------+  |    Unix    |   +------+-------+ |
+|           |           |   domain   |          |         |
+|           v           |   socket   |  o   o   v   o   o |
+| +------------------+  |            |     Arbitrary  o   |
+| |    nodejs-bin    +-------------->|  o  JavaScript   o |
+| +---------+--------+  |    exec    |    o   o   o   o   |
 |                       |            |                    |
 +-----------------------+            +--------------------+
 
@@ -52,8 +53,8 @@ launch the NodeJS server from Python and hit it with requests.
 
 So while it should be possible, and relatively _nice_, to run JavaScript
 directly within the CPython process by simply embedding V8,
-[attempts to do so](#alternaties-considered) are somewhat fraught in practice—I
-couldn't get any to work.
+[attempts to do so](#alternatives-considered) are somewhat fraught in
+practice—_I couldn't get any to work._
 
 This is a shame! Running an embedded in-process V8 would particularly be nice
 for tightly coupled Python/JS code; you could pass control and data back and
@@ -61,11 +62,10 @@ forth freely and efficiently, in theory, and enable all kinds of fun workflows.
 
 But what if our code isn't so coupled; what if we just want to evaluate a blob
 of JavaScript and get a blob of data back, without much worry about performance?
-Can we run V8 (or other JS engine) out-of-process instead?
-
-For that, NodeJS is obviously a perfectly fine self-contained V8 JS engine,
-available on most modern systems. Let's use that! We just need to teach it to
-run code from a parent process...
+Can we run V8 (or other JS engine) out-of-process instead? For that, NodeJS is
+obviously a perfectly fine self-contained V8 JS engine, available on most modern
+systems. Let's use that! We just need to teach it to run code from a parent
+process...
 
 But how do we send it code? I figured, as a low-dependency option, we can use
 HTTP over a Unix domain socket as our IPC.
@@ -73,11 +73,11 @@ HTTP over a Unix domain socket as our IPC.
 Obviously, an IPC which effectively sends arbitrary code for execution raises
 security concerns. If done improperly, we're building a
 [Remote Code Execution (RCE) vulnerability](https://en.wikipedia.org/wiki/Arbitrary_code_execution).
-
 Using a Unix domain socket alleviates some security concern (including local
 privilege escalation vulnerability). With some extra configuration footgun
-checks (blocking binding to a TCP/IP port, and checking for a good `umask`),
-using a Unix domain socket _should_ make this safe. I think. :) More on that
+checks (blocking binding to a TCP/IP port, and checking for a good
+[`umask`](https://en.wikipedia.org/wiki/Umask)), using a Unix domain socket
+_should_ make this safe. I think. :) More on that
 [here](https://www.npmjs.com/package/http-eval#security-stance).
 
 Anyway, I coded this up in TypeScript as an `npx`-executable binary script,
@@ -89,27 +89,29 @@ using [`express`](https://www.npmjs.com/package/express),
 
 `http-eval` could be used to provide JavaScript evaluation to other languages
 (or just to the shell, as an awkward REPL). But we're going to call it from
-Python; see below.
+Python...
 
 ## Part B: bundling and launching NodeJS via `nodejs-bin`
 
 This, thankfully, [already exists](https://pypi.org/project/nodejs-bin/), thanks
 to Sam Willis!
 
-In summary: `nodejs-bin` is a Python PyPI package which bundles NodeJS, so
-Python programmers don't have to figure out how to install it, and Python
-packages can just depend on it using Python-language dependency systems, and
-take NodeJS for granted. `nodejs-bin` has a helper to launch NodeJS (in our
-case, we want `npx`, to just run a script).
+In summary: [`nodejs-bin`](https://pypi.org/project/nodejs-bin/) is a Python
+PyPI package which bundles NodeJS, so Python programmers don't have to figure
+out how to install it, and Python packages can just depend on it using
+Python-language dependency systems, and take NodeJS for granted. `nodejs-bin`
+has a helper to launch NodeJS. In our case, we want `npx`, to just run a
+script...
 
 ## Bringing it together: `nodejs-eval`
 
 Now we have the parts we need to build a simple Python module which:
 
-- Launches a NodeJS sidecar (specifically `npx`),
-- Which launches a JavaScript evaluation server on a Unix domain socket, and
+- Launches a NodeJS sidecar (specifically `npx`, from `nodejs-bin`),
+- Which launches a JavaScript evaluation server on a Unix domain socket
+  (`http-eval`), and
 - Exposes helpers to send arbitrary JS to that server, and then decode and
-  return the results.
+  return the results. This is the `nodejs-eval` Python module.
 
 I coded this up using [`hatch`](https://github.com/pypa/hatch),
 [`aiohttp`](https://docs.aiohttp.org/en/stable/),

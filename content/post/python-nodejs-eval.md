@@ -140,7 +140,7 @@ Here's what I found:
     before giving up._
 - [`python-spidermonkey`](https://github.com/davisp/python-spidermonkey): A
   different set of Python bindings for Spidermonkey, from Paul J. Davis.
-  - _I never tried this! Just ran across it while writing this blog post._
+  - _Abandoned for 14 years!_
 - [`Js2Py`](https://github.com/PiotrDabkowski/Js2Py): Natively executes
   JavaScript in Python using a custom Python-native JS engine.
   - _Still in development. Doesn't support ES6 including arrow functions, so I

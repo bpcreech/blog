@@ -40,7 +40,7 @@ made a _new_ thing!
 |           v           |   socket   |  o   o   v   o   o |
 | +------------------+  |            |     Arbitrary  o   |
 | |    nodejs-bin    +-------------->|  o  JavaScript   o |
-| +---------+--------+  |    exec    |    o   o   o   o   |
+| +---------+--------+  | fork/exec  |    o   o   o   o   |
 |                       |            |                    |
 +-----------------------+            +--------------------+
 

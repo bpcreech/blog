@@ -124,7 +124,7 @@ I coded this up using [`hatch`](https://github.com/pypa/hatch),
 In action it looks like:
 
 ```console
-    pip install nodejs-eval
+    $ pip install nodejs-eval
 ```
 
 ... and then:

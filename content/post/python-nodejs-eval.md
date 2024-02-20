@@ -24,12 +24,16 @@ made a _new_ thing!
 <!--more-->
 
 ```python
-    from nodejs_eval.eval import evaluator
+import asyncio
+from nodejs_eval.eval import evaluator
 
+async def demo():
     # Let's run some JavaScript from Python!
     async with evaluator() as e:
         result = await e.run("return Math.pow(7, 3);")
         assert result == 343
+
+asyncio.run(demo())
 ```
 
 ```goat
@@ -132,12 +136,16 @@ In action it looks like:
 ... and then:
 
 ```python
-    from nodejs_eval.eval import evaluator
+import asyncio
+from nodejs_eval.eval import evaluator
 
+async def demo():
     # Let's run some JavaScript from Python!
     async with evaluator() as e:
         result = await e.run("return Math.pow(7, 3);")
         assert result == 343
+
+asyncio.run(demo())
 ```
 
 ## Alternatives considered

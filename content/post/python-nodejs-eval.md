@@ -121,6 +121,23 @@ I coded this up using [`hatch`](https://github.com/pypa/hatch),
 [Github](https://github.com/bpcreech/nodejs-eval) and
 [PyPI](https://pypi.org/project/nodejs-eval/).
 
+In action it looks like:
+
+```console
+    pip install nodejs-eval
+```
+
+... and then:
+
+```python
+    from nodejs_eval.eval import evaluator
+
+    # Let's run some JavaScript from Python!
+    async with evaluator() as e:
+        result = await e.run("return Math.pow(7, 3);")
+        assert result == 343
+```
+
 ## Alternatives considered
 
 Python and JavaScript are two of the most popular programming languages in the

@@ -165,6 +165,12 @@ Here's what I found:
   JavaScript in Python using a custom Python-native JS engine.
   - _Still in development. Doesn't support ES6 including arrow functions, so I
     moved on._
+- [`PyMiniRacer`](https://github.com/sqreen/PyMiniRacer): Minimalist V8 Python
+  bindings created by Sqreen, whch was later
+  [aquired by DataDog](https://www.datadoghq.com/about/latest-news/press-releases/datadog-signs-definitive-agreement-to-acquire-sqreen/).
+  - _TODO! I just discovered this while writing this blog post! This may still
+    work. There's not been a recent binary release, but it may still build from
+    sources..._
 - [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/): Just
   run the whole Chromium browser as a subprocess from Python.
   - _Obviously works and used by zillions of folks, but seemed heavier-weight

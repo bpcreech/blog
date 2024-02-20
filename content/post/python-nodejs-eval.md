@@ -25,7 +25,7 @@ made a _new_ thing!
 
 ```python
 import asyncio
-from nodejs_eval.eval import evaluator
+from nodejs_eval import evaluator
 
 async def demo():
     # Let's run some JavaScript from Python!
@@ -137,7 +137,7 @@ In action it looks like:
 
 ```python
 import asyncio
-from nodejs_eval.eval import evaluator
+from nodejs_eval import evaluator
 
 async def demo():
     # Let's run some JavaScript from Python!

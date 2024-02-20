@@ -24,6 +24,8 @@ made a _new_ thing!
 <!--more-->
 
 ```python
+    from nodejs_eval.eval import evaluator
+
     # Let's run some JavaScript from Python!
     async with evaluator() as e:
         result = await e.run("return Math.pow(7, 3);")

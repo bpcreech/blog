@@ -73,9 +73,10 @@ HTTP over a Unix domain socket as our IPC.
 Obviously, an IPC which effectively sends arbitrary code for execution raises
 security concerns. If done improperly, we're building a
 [Remote Code Execution (RCE) vulnerability](https://en.wikipedia.org/wiki/Arbitrary_code_execution).
-Using a Unix domain socket with some extra configuration footgun
-checks (blocking binding to a TCP/IP port, and checking for a good
-[`umask`](https://en.wikipedia.org/wiki/Umask)), _should_ make this safe. I think. :) More on that
+Using a Unix domain socket with some extra configuration footgun checks
+(blocking binding to a TCP/IP port, and checking for a good
+[`umask`](https://en.wikipedia.org/wiki/Umask)), _should_ make this safe. I
+think. :) More on that
 [here](https://www.npmjs.com/package/http-eval#security-stance).
 
 Anyway, I coded this up in TypeScript as an `npx`-executable binary script,

@@ -181,6 +181,6 @@ Here's what I found:
     be a good idea to update it... but the build instructions currently fail.
     Maybe this can be resuscitated with relatively little work._
 - [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/): Just
-  run the whole Chromium browser as a subprocess from Python.
+  run the whole Chromium or Firefox browser as a subprocess from Python.
   - _Obviously works and used by zillions of folks, but seemed heavier-weight
     than what I want._

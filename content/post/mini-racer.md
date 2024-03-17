@@ -54,13 +54,14 @@ KeyboardInterrupt
 ```
 
 _Other new features can be found
-[on the relnotes page](https://bpcreech.com/PyMiniRacer/history/) where v0.7.0
+[on the relnotes page](https://bpcreech.com/PyMiniRacer/history/), where v0.7.0
 is the first new version since 2021._
 
 ## A lineage
 
-1. **`therubyracer` (2009-2018)** [Charles Lowell](https://github.com/cowboyd)
-   of [Frontside Software](https://frontside.com/) created
+1. **[`therubyracer`](https://github.com/rubyjs/therubyracer) (2009-2018)**
+   [Charles Lowell](https://github.com/cowboyd) of
+   [Frontside Software](https://frontside.com/) created
    [The Ruby Racer](https://github.com/rubyjs/therubyracer) to embed
    [V8](https://v8.dev/) (the JavaScript engine used by Chrome, NodeJS, etc)
    into [Ruby](https://www.ruby-lang.org/) for direct JS execution from Ruby
@@ -69,12 +70,13 @@ is the first new version since 2021._
      point for Ruby Racer, because upgrading V8 often mean revamping Ruby Racer
      to fit interface changes. So this project was eventually archived, and
      replaced with...
-2. **`mini_racer` (2016-)** [Sam Saffron](https://github.com/SamSaffron) and
-   others created [`mini_racer`](https://github.com/rubyjs/mini_racer), a new
-   Ruby / V8 integration, stripped down relative to Ruby Racer. This version is
-   still maintained.
-3. **`sqreen/PyMiniRacer` (2016-2021)** [Sqreen](https://github.com/sqreen), a
-   wep app security startup, created
+2. **[`mini_racer`](https://github.com/rubyjs/mini_racer) (2016-)**
+   [Sam Saffron](https://github.com/SamSaffron) and others created
+   [`mini_racer`](https://github.com/rubyjs/mini_racer), a new Ruby / V8
+   integration, stripped down relative to Ruby Racer. This version is still
+   maintained.
+3. **[`sqreen/PyMiniRacer`](https://github.com/sqreen/PyMiniRacer) (2016-2021)**
+   [Sqreen](https://github.com/sqreen), a wep app security startup, created
    [`PyMiniRacer`](https://github.com/sqreen/PyMiniRacer), a Python module
    modeled after Ruby's `mini_racer`. This followed the same model of minimizing
    the interface with V8, and also used a Python `ctypes` integration (as
@@ -83,10 +85,11 @@ is the first new version since 2021._
    little support burden.
    - Unfortunately, `PyMiniRacer` wasn't updated after 2021 when
      [Sqreen was acquired by DataDog](https://www.datadoghq.com/blog/datadog-acquires-sqreen/).
-4. **`bpcreech/PyMiniRacer` (2024-)** This is what you're reading about now. :)
+4. **[`bpcreech/PyMiniRacer`](https://github.com/bpcreech/PyMiniRacer) (2024-)**
+   This is what you're reading about now. :)
 
 After discussion with the Sqreen (now DataDog) folks, we decided to host my
-revival of their `PyMiniRacer` project as a fork, which lives at:
+revival of their `PyMiniRacer` project as a fork, which lives here:
 
 - [Github](https://github.com/bpcreech/PyMiniRacer)
 - [Docs](https://bpcreech.com/PyMiniRacer/), and
@@ -95,13 +98,13 @@ revival of their `PyMiniRacer` project as a fork, which lives at:
 ## General updates
 
 Other than upgrading V8—which has its own section below—I took the opportunity
-to dust off a lot of parts of this project.
+to dust off various parts of this project.
 
 ### Python ecosystem updates
 
-Lots of things have happened in the Python world!
+In particular, lots of things have happened in the Python world!
 
-#### Python versions (drop 2, add up to 3.12)
+#### Python versions (drop Python 2, add up to 3.12)
 
 First, we can drop Python 2 which was
 [globally EOL'd in 2020](https://www.python.org/doc/sunset-python-2/) (after a
@@ -130,7 +133,7 @@ managed its various bits of automation using a hand-written `Makefile`. Python
 now has a standardized pluggable packaging system for building binary
 distributions, and [Hatch](https://github.com/pypa/hatch) is the most popular
 implementation of it.
-[_Hatch is trying to be the Cargo or Go CLI equivalent for Python_](https://github.com/pypa/hatch/discussions/1117#discussioncomment-7827378)
+[_"Hatch is trying to be the Cargo or Go CLI equivalent for Python"_](https://github.com/pypa/hatch/discussions/1117#discussioncomment-7827378)
 per [its author](https://github.com/ofek). By using it (and accepting its
 various opinions) we can drop a _lot_ of configuration from `PyMiniRacer`.
 
@@ -149,11 +152,11 @@ super well (modulo, not on [Alpine](https://www.alpinelinux.org/) for
 [reasons](https://github.com/indygreg/python-build-standalone/issues/86)) and
 lets us drop `tox` as a development dependency.
 
-## Docs!
+### Docs!
 
 Inspired by
 [this post](https://matklad.github.io//2021/02/06/ARCHITECTURE.md.html), I
-figured we should have an ARCHITECTURE.md, so
+figured we should have an `ARCHITECTURE.md`, so
 [I wrote one](https://github.com/bpcreech/PyMiniRacer/blob/main/ARCHITECTURE.md)
 ([same on the `mkdocs` site](https://bpcreech.com/PyMiniRacer/architecture/)).
 
@@ -229,7 +232,7 @@ But building V8 is hard! Fun challenges in building V8:
    Alpine or Linux-on-Arm:** For `PyMiniRacer` we want to target at least
    `{ Windows, Mac, Linux [glibc], Linux [musl] } × { x86_64, aarch64 }`
    (`aarch64`
-   [by popular demand](https://github.com/sqreen/PyMiniRacer/issues/154).
+   [by popular demand](https://github.com/sqreen/PyMiniRacer/issues/154)).
    However, V8 doesn't support building on Linux-on-arm64, although it does
    support cross-compiling for it. V8 doesn't support `musl` (Alpine's `libc`)
    in either on-host building _or_ cross-compiling. So we need to do various fun
@@ -257,7 +260,7 @@ fantastic [`run-on-arch-action`](https://github.com/uraimo/run-on-arch-action).
 This GitHub Action plug-in helps us build Docker containers for Linux
 distributions and architectures, and then build `PyMiniRacer` there.
 
-### Extras from updating V8
+### Extra features added while updating V8
 
 Aside from
 [all the V8 updates from v8.9 to v12.2](https://chromium.googlesource.com/v8/v8/+log/branch-heads/8.9..branch-heads/12.2/?n=1000),

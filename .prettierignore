@@ -1,2 +1,5 @@
 # don't format themes (which are git submodules):
 themes
+
+# don't format html
+*.html

@@ -18,7 +18,7 @@ In [this last blog post](https://bpcreech.com/post/python-nodejs-eval/), I
 created a [helper](https://pypi.org/project/nodejs-eval/) to call JavaScript
 from Python using a NodeJS sidecar process. In the post I
 [commented](https://bpcreech.com/post/python-nodejs-eval/#alternatives-considered)
-that *in-*process JS evaluation might be nicer. The old
+that _in-_ process JS evaluation might be nicer. The old
 [Sqreen `PyMiniRacer` project](https://github.com/sqreen/PyMiniRacer) had only
 _recently_ fallen into disrepair. Can we revive it?
 
@@ -134,14 +134,16 @@ now has a standardized pluggable packaging system for building binary
 distributions, and [Hatch](https://github.com/pypa/hatch) is the most popular
 implementation of it.
 [_"Hatch is trying to be the Cargo or Go CLI equivalent for Python"_](https://github.com/pypa/hatch/discussions/1117#discussioncomment-7827378)
-per [its author](https://github.com/ofek). By using it (and accepting its
-various opinions) we can drop a _lot_ of configuration from `PyMiniRacer`.
+per [its author](https://github.com/ofek). By using Hatch (and accepting its
+various opinions) we can drop a _lot_ of developer tooling configuration from
+`PyMiniRacer`.
 
 Hatch includes a bundled an opinionated linter and code formatter in
-[Ruff](https://github.com/astral-sh/ruff), which lets us drop `flake8` and
-`isort` and their config files as development dependencies. The only default
-setting I changed was the line length, from 120 to Black's default of 88. I
-thought this pointless debate was
+[Ruff](https://github.com/astral-sh/ruff), which lets us drop
+[`flake8`](https://flake8.pycqa.org/en/latest/) and
+[`isort`](https://pycqa.github.io/isort/) and their config files as development
+dependencies. The only default setting I changed was the line length, from 120
+to Black's default of 88. I thought this pointless debate was
 [finally settled by Black](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length)
 when it won the formatting war, but for some reason Hatch
 [overrides this setting to 120](https://github.com/pypa/hatch/discussions/1117),
@@ -150,7 +152,14 @@ so I put it back where Black (and Ruff) default to.
 Hatch also includes built-in support for Python version matrix testing. It works
 super well (modulo, not on [Alpine](https://www.alpinelinux.org/) for
 [reasons](https://github.com/indygreg/python-build-standalone/issues/86)) and
-lets us drop `tox` as a development dependency.
+lets us drop [`tox`](https://tox.wiki/en/4.14.1/) as a development dependency.
+
+### `pytest` instead of `unittest`
+
+This is more of a no-brainer these days. `unittest` has been built into Python
+since forever, but these days everyone (in the OSS community anyway) seems to be
+converging on `pytest`. So I converted all the tests to `pytest`, which makes
+for slightly simpler-looking tests and prettier console output, yay.
 
 ### Docs!
 
@@ -158,13 +167,14 @@ Inspired by
 [this post](https://matklad.github.io//2021/02/06/ARCHITECTURE.md.html), I
 figured we should have an `ARCHITECTURE.md`, so
 [I wrote one](https://github.com/bpcreech/PyMiniRacer/blob/main/ARCHITECTURE.md)
-([same on the `mkdocs` site](https://bpcreech.com/PyMiniRacer/architecture/)).
+([_or see it on the `mkdocs` site_](https://bpcreech.com/PyMiniRacer/architecture/)).
 
 I also sprinkled in a ton of comments. `PyMiniRacer`'s V8 build (see below) is
-full of workarounds and config changes. These do _not_ help in forwards
-compatibility, because each little config tweak is a potential source of future
-breakage when that config parameter stops working. Now, we at least have a paper
-trail of where those tweaks came from!
+full of workarounds, written as config tweaks, patches, and little extra steps.
+These workarounds do _not_ help the forwards compatibility story, because each
+little tweak to the build process is a potential source of future breakage when
+the upstream V8 build process changes. Now, we at least have a paper trail of
+where those tweaks came from!
 
 Finally, and most dramatically from a cosmetic perspective, I migrated the
 `PyMiniRacer` docs from [Sphinx](https://www.sphinx-doc.org/en/master/) to
@@ -174,11 +184,11 @@ working forever, but the current ecosystem mindshare seems to be pouring into
 `mkdocs-material` lately.
 
 I am a little worried about maintainability since `mkdocs-material` is a
-complicated and load-bearing _plugin_ for the `mkdocs`, and itself only works
-with
-[_other_ plugins for `mkdocs-material`](https://squidfunk.github.io/mkdocs-material/setup/extensions/).
+complicated and load-bearing _plugin_ for the `mkdocs`, and itself works best
+only when combined with
+[_other_ plugins from `mkdocs-material`'s _own_ plugin system](https://squidfunk.github.io/mkdocs-material/setup/extensions/).
 it's a setup ripe for [this situation](https://xkcd.com/2347/). But, I went with
-peer pressure, and the new docs look great and have a very simple configuration,
+peer pressure, and the new docs look great with very little configuration,
 because `mkdocs-material` is indeed fantastic. The new docs live
 [here](https://bpcreech.com/PyMiniRacer).
 
@@ -190,11 +200,11 @@ today.
 
 ### General challenges in building V8
 
-There is no official binary distribution of V8. The only way to use V8 is to
-build it yourself. _Unless, perhaps, you use the NodeJS binary, which brings us
-back to
+There is no official binary distribution of the V8 library as a standalone unit.
+The only way to use V8 is to build it yourself. _Unless, perhaps, you use the
+whole NodeJS binary, which brings us back to
 [my last blog post](https://bpcreech.com/post/python-nodejs-eval/)—maybe, after
-all, the best way to use V8 is via a server running in NodeJS?_
+all, the best way to use V8 is via a server running inside NodeJS?_
 
 But building V8 is hard! Fun challenges in building V8:
 
@@ -223,18 +233,20 @@ But building V8 is hard! Fun challenges in building V8:
    `depot_tools` includes its very own binaries built for some but not all our
    target platforms, for things like Python,
    [Goma](https://chromium.googlesource.com/infra/goma/client/) (a build cache
-   we're not using), [Ninja](https://ninja-build.org/) (a build system we do
+   we're not using), [Ninja](https://ninja-build.org/) (a build system we _do_
    use), [GN](https://github.com/o-lim/generate-ninja) (a meta-build system we
-   also use), etc.
+   also use), etc. The `depot_tools` `fetch` tool acts as a recursive dependency
+   module grabber (like Git submodules, but fancy). Once we have all the source,
+   V8 uses a series of Python scripts to wrap GN, which in turn wraps Ninja.
 
 3. **That build ecosystem, and the build in general, doesn't actually work _on_
    Alpine or Linux-on-Arm:** For `PyMiniRacer` we want to target at least
    `{ Windows, Mac, Linux [glibc], Linux [musl] } × { x86_64, aarch64 }`
    (`aarch64`
-   [by popular demand](https://github.com/sqreen/PyMiniRacer/issues/154)).
-   However, V8 doesn't support building on Linux-on-arm64, although it does
-   support cross-compiling for it. V8 doesn't support `musl` (Alpine's `libc`)
-   in either on-host building _or_ cross-compiling. So we need to do various fun
+   [by popular demand](https://github.com/sqreen/PyMiniRacer/issues/154)). V8
+   doesn't support building _on_ Linux-on-arm64, although it does support
+   _cross-compiling for_ it. V8 doesn't support `musl` (Alpine's `libc`) in
+   either on-host building _or_ cross-compiling. So we need to do various fun
    config tweaks to make it actually work.
 
 4. **V8 and the build system change all the time:** V8 is under very heavy
@@ -244,13 +256,15 @@ But building V8 is hard! Fun challenges in building V8:
    break in with newer V8 verions. So we want to _minimize_ the amount of build
    configuration we do in `PyMiniRacer`, to future-proof it as best we can.
 
-5. **V8 needs a bleeding-edge LLVM (particularly, clang) and wants its own
-   libstdc++:** V8 uses brand new features of `clang`, including an ML-driven
+5. **V8 needs a bleeding-edge LLVM (particularly, `clang`) and wants its own
+   `libstdc++`:** V8 uses brand new features of `clang`, including an ML-driven
    optimization model. It comes with a build of the llvm toolchain, but only for
    supported platforms (thus excluding Alpine, and excluding building _on_ Linux
-   `aarch64`). We must mitigate this by installing a bleeding-edge LLVM from
+   `aarch64`). We work around this by installing the latest LLVM from
    [the LLVM project](https://llvm.org/) where the binaries vendored into V8
-   itself don't work.
+   itself don't work. But even this version isn't new enough for V8! We _still_
+   have to tweak the build config to make it build even with the latest _stable_
+   LLVM.
 
 Meanwhile, we impose another challenge by sticking to the free GitHub Actions
 runners: unfortunately, GitHub Actions has no native `aarch64` hosted runners,
@@ -267,8 +281,11 @@ I plumbed in the following which had been disabled in prior `PyMiniRacer`
 builds:
 
 - Support for the [ECMAScript internalization API](https://v8.dev/docs/i18n) and
-  thus [the ECMA `Intl` API](https://tc39.es/ecma402/)
-- V8 [fast startup snapshots](https://v8.dev/blog/custom-startup-snapshots)
+  thus [the ECMA `Intl` API](https://tc39.es/ecma402/).
+- V8 [fast startup snapshots](https://v8.dev/blog/custom-startup-snapshots).
+
+Both of these require pulling generated data files into the Python package,
+alongside the compiled DLL.
 
 ### Potential future work in simplifying the V8 build
 
@@ -290,15 +307,28 @@ out of `GN`+`ninja` and into another to-be-determined build system.
 Alternatively, it would be nice if V8 lived within a common C/C++ package
 system. The winning multi-platform C/C++ package system today seems to be
 <https://conan.io>. Making V8 work with Conan (well enough for official upload
-to conan central) would be tough because V8 loves to download its own
-dependencies in violation of Conan's common-sense One-Definition Rule (ODR).
+to [Conan Center](https://conan.io/center)) would be tough because V8 loves to
+download its own dependencies in violation of Conan's common-sense
+One-Definition Rule (ODR).
 
-## Future work in `PyMiniRacer`
+## Other future work in `PyMiniRacer`
 
 Future work may include:
 
+- Updates to new V8 builds which we can assume will appear unabated.
 - Support for
   [Python `asyncio`](https://docs.python.org/3/library/asyncio.html).
 - Other stuff from
   [the old GitHub issues](https://github.com/sqreen/PyMiniRacer/issues) list.
-- Updates to new V8 builds which we can assume will appear unabated.
+- Standard library stuff. `PyMiniRacer` has no `console.log` (and no `window`
+  object for `console` to live on), no `setTimeout`, etc. Providing such
+  functions would be handy, but also if we're not careful may act as a breach of
+  the security sandbox provided by `PyMiniRacer`, will move away from the
+  minimal-interface rule we're going for, and may trend toward "just being
+  NodeJS" with its
+  [rich standard library](https://nodejs.org/docs/latest-v12.x/api/). (At this
+  point, we'd be better off by embedding NodeJS, or just
+  [running it as a sidecar](https://pypi.org/project/nodejs-eval/).
+
+If you're reading this and want to contribute, go for it! See
+[the contribution guide](https://bpcreech.com/PyMiniRacer/contributing/).

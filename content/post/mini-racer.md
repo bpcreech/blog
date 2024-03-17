@@ -307,15 +307,16 @@ out of `GN`+`ninja` and into another to-be-determined build system.
 Alternatively, it would be nice if V8 lived within a common C/C++ package
 system. The winning multi-platform C/C++ package system today seems to be
 <https://conan.io>. Making V8 work with Conan (well enough for official upload
-to [Conan Center](https://conan.io/center)) would be tough because V8 loves to
-download its own dependencies in violation of Conan's common-sense
+to [Conan Center](https://conan.io/center)) would be tough because, along with
+[all the difficulties cited above](#general-challenges-in-building-v8), V8 loves
+to download its own dependencies in violation of Conan's common-sense
 One-Definition Rule (ODR).
 
 ## Other future work in `PyMiniRacer`
 
 Future work may include:
 
-- Updates to new V8 builds which we can assume will appear unabated.
+- Updates to new V8 releases which we can assume will appear unabated.
 - Support for
   [Python `asyncio`](https://docs.python.org/3/library/asyncio.html).
 - Other stuff from

@@ -327,7 +327,7 @@ Future work may include:
   the security sandbox provided by `PyMiniRacer`, will move away from the
   minimal-interface rule we're going for, and may trend toward "just being
   NodeJS" with its
-  [rich standard library](https://nodejs.org/docs/latest-v12.x/api/). (At this
+  [rich standard library](https://nodejs.org/docs/latest-v12.x/api/). At this
   point, we'd be better off by embedding NodeJS, or just
   [running it as a sidecar](https://pypi.org/project/nodejs-eval/).
 

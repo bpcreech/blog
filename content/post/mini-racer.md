@@ -67,7 +67,7 @@ is the first new version since 2021._
    into [Ruby](https://www.ruby-lang.org/) for direct JS execution from Ruby
    programs.
    - Unfortunately, the rich integration between Ruby Racer and V8 became a pain
-     point for Ruby Racer, because upgrading V8 often mean revamping Ruby Racer
+     point for Ruby Racer, because upgrading V8 often meant revamping Ruby Racer
      to fit interface changes. So this project was eventually archived, and
      replaced with...
 2. **[`mini_racer`](https://github.com/rubyjs/mini_racer) (2016-)**
@@ -76,7 +76,7 @@ is the first new version since 2021._
    integration, stripped down relative to Ruby Racer. This version is still
    maintained.
 3. **[`sqreen/PyMiniRacer`](https://github.com/sqreen/PyMiniRacer) (2016-2021)**
-   [Sqreen](https://github.com/sqreen), a wep app security startup, created
+   [Sqreen](https://github.com/sqreen), a web app security startup, created
    [`PyMiniRacer`](https://github.com/sqreen/PyMiniRacer), a Python module
    modeled after Ruby's `mini_racer`. This followed the same model of minimizing
    the interface with V8, and also used a Python `ctypes` integration (as

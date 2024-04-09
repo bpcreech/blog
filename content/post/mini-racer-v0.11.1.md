@@ -697,9 +697,11 @@ what happens now is:
    `BinaryValue` objects down. This avoids a memory leak, and avoids dangling
    pointers on the C++ side.
 
-2. When Python later calls `_ValueHandle.__del__`, it passes a context ID to
-   `MiniRacer::ContextFactory`. This context ID is no longer valid because the
-   context was torn down already. Thus, this call can be safely ignored.
+2. When Python later calls `_ValueHandle.__del__`, it passes both a context ID
+   _and_ the value handle to `MiniRacer::ContextFactory`.
+   `MiniRacer::ContextFactory` notices that the whole context ID is no longer
+   valid because the context was torn down already. The context and its values
+   are already gone. Thus, this call can be safely ignored.
 
 I think the design strategy is generalizable to most Python/C++ integrations,
 and potentially likewise Java/C++ and C#/C++ integrations. (_TL;DR: use integer

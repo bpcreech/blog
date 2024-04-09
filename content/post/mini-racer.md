@@ -35,7 +35,7 @@ from py_mini_racer import MiniRacer
 mr = MiniRacer()
 
 # Let's run some JavaScript from Python!
->>> mr.run("Math.pow(7, 3);")
+>>> mr.eval("Math.pow(7, 3);")
 343
 
 # Updated, for the first time since 2021!

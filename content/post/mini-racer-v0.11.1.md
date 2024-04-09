@@ -673,8 +673,9 @@ what happens now is:
 I think the design strategy is generalizable to most Python/C++ integrations,
 and potentially likewise Java/C++ and C#/C++ integrations. (_TL;DR: use integer
 identifiers instead of passing pointers, track object lifecycle in maps on the
-C++ side, validate all incoming identifiers from Python, and refactor so that out-of-order finalization doesn't hurt
-anything_). I wonder if it's written down anywhere.
+C++ side, validate all incoming identifiers from Python, and refactor so that
+out-of-order finalization doesn't hurt anything_). I wonder if it's written down
+anywhere.
 
 ## Contribute!
 

@@ -301,18 +301,20 @@ The resulting setup looks roughly like this:
 |                   |  1. creates, ----->|             |           | |
 |                   |                    | v8::Isolate |           | |
 |                   |  2. exposes,       |             |           | |
-| v8::Isolate* <-------------------------+             |           | |
+| v8::Isolate* <----+--------------------+             |           | |
 |     ^             |                    +--+----------+           | |
-|     | 6. enqueues |                       |  ^                   | |
-|     |             |  3. ... then runs:     `-'  PumpMessages     | |
-|     |             |                  (looping until shutdown)    | |
+|     | 6. enqueues |                       |   ^                  | |
+|     |             |                       |   |                  | |
+|     |             |  3. … then runs        '-'                   | |
+|     |             |     v8::Platform::PumpMessages               | |
+|     |             |     (looping until shutdown)                 | |
 |     |              '---------------------------------------------' |
 |     |                                                              |
-+-----|--------------------------------------------------------------+
++-----+--------------------------------------------------------------+
       | 5. MiniRacer::IsolateManager
       |     ::Run(task)
       |
-+--------------------------+            +-----------------------+
++-----+--------------------+            +-----------------------+
 |                          |            |                       |
 | MiniRacer::CodeEvaluator +----------->| MiniRacer::AdHocTask  |
 |         (etc)            | 4. creates |                       |
@@ -443,6 +445,8 @@ deletion happens:
    Then user code doesn't have to remember to free things at all! _What could go
    possibly wrong?_
 
+   <center><div style="max-width: 300px;">
+
    ```goat
    +--------------+    +--------------+
    |              +--->|              |
@@ -450,6 +454,8 @@ deletion happens:
    |              |<---+              |
    +--------------+    +--------------+
    ```
+
+   </div></center>
 
 #### The trouble with finalizers
 
@@ -470,14 +476,16 @@ finalizers for both objects, in _whatever_ order you like, and you declare it to
 be programmer error if these objects refer to each other in their finalizers,
 and you generally _declare that finalization order doesn't matter_.
 
+<center><div style="text-align: center; max-width: 400px;">
+
 ```goat
       +--------------+    +--------------+
       |              +--->|              |
       |       A      |    |       B      |
       |              |<---+              |
       +-------+------+    +-------+------+
-Python space  | __del__           |  __del__
-~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~
+Python space  | `__del__`         |  `__del__`
+··············|···················|·············
 C++ space     |                   |
               v                   v
       +--------------+    +--------------+
@@ -486,6 +494,8 @@ C++ space     |                   |
       |              |    |              |
       +--------------+    +--------------+
 ```
+
+</div></center>
 
 Unfortunately, _order sometimes matters_. Let's say those objects `A` and `B`
 are each managing C++ objects, `C` and `D`, respectively, as depicted above.
@@ -496,6 +506,8 @@ the link between C++ objects `C` and `D`. It is likely to call `B`'s finalizer
 first, tearing down `D` before `C`, thus leaving a dangling reference on the C++
 side.
 
+<center><div style="text-align: center; max-width: 600px;">
+
 ```goat
    +------------------------------+    +--------------------------+
    |                              +--->|                          |
@@ -503,17 +515,17 @@ side.
    |                              |<---+                          |
    +----------+-------------------+    +---+----------------------+
               |                            |
-Python space  | __del__                    |  __del__
-~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~
-C++ space     | (calls mr_value_free       | (calls mr_context_free
-              |  with a pointer)           |  with a pointer)
+Python space  | `__del__`                  | `__del__`
+··············|····························|····························
+C++ space     | calls mr_value_free        | calls mr_context_free
+              | with a pointer             | with a pointer
               v                            v
    +------------------------------+    +--------------------------+
    |                              |    |                          |
    |    MiniRacer::BinaryValue    |    |    MiniRacer::Context    |
    |                              |    |                          |
    +----------------+-------------+    +------------+-------------+
-                    | (points into)                 | (owns)
+                    | points into                   | owns
                     |                               v
                     |                  +--------------------------+
                     |                  |                          |
@@ -521,6 +533,8 @@ C++ space     | (calls mr_value_free       | (calls mr_context_free
                                        |                          |
                                        +--------------------------+
 ```
+
+</div></center>
 
 This happens in practice in MiniRacer: a Python `_Context` wraps a
 `MiniRacer::Context`, and a Python `_ValueHandle` wraps a
@@ -606,6 +620,8 @@ one pre-existing leak this way!)
 The resulting setup, just looking at Contexts and JS Values, sort of looks like
 the following diagram (and similar goes for async task handles):
 
+<center><div style="text-align: center; max-width: 600px;">
+
 ```goat
    +---------------------------------+    +------------------------------+
    |                                 +--->|                              |
@@ -613,30 +629,30 @@ the following diagram (and similar goes for async task handles):
    |                                 |<---+                              |
    +------------------------------+--+    +---+--------------------------+
                                   |           |
-Python space    __del__           |           |  __del__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-C++ space  (calls mr_value_free   |           | (calls mr_context_free with
-            with a context ID +   |           |  a uint64 id)
-            value handle pointer) |           |
+Python space   `__del__`          |           | `__del__`
+··································|···········|······························
+C++ space    calls mr_value_free  |           | calls mr_context_free with
+             with a context ID +  |           | a uint64 id
+             value handle pointer |           |
                                   |           v
                                   |       +-----------------------------+
                                   +------>|                             |
                                           |  MiniRacer::ContextFactory  |
-                                          | (validates context IDs...)  |
+                                          |    validates context IDs…   |
                                           +-----------+-----------------+
-                                                      | (...and passes valid
-                                                      v  calls to...)
+                                                      | … and passes valid
+                                                      v calls to …
                                           +------------------------------+
                                           |                              |
-              +---------------------------|      MiniRacer::Context      |
-              | (passes individual value  |                              |
-              |  deletions to, and/or     +----------+-------------------+
-              |  deletes in bulk upon                |
-              v  context teardown)                   |
+              +---------------------------+      MiniRacer::Context      |
+              | "passes individual value  |                              |
+              | deletions to, and/or      +----------+-------------------+
+              | deletes in bulk upon                 |
+              v context teardown"                    |
    +---------------------------------+               |
    |                                 |               |
    |  MiniRacer::BinaryValueFactory  |               |
-   |     (validates handle ptrs)     |               |
+   |     validates handle ptrs       |               |
    +----+----------------------------+               |
         | delete (if handle is valid, or upon        |
         v factory teardown if never deleted)         |
@@ -644,14 +660,16 @@ C++ space  (calls mr_value_free   |           | (calls mr_context_free with
    |                                 |               |
    |      MiniRacer::BinaryValue     |               |
    |                                 |               |
-   +----------------+----------------+               |(owns)
-                    | (points into)                  v
+   +----------------+----------------+               | owns
+                    | points into                    v
                     |                  +--------------------------+
                     |                  |                          |
                     +----------------->|        v8::Isolate       |
                                        |                          |
                                        +--------------------------+
 ```
+
+</div></center>
 
 With this new setup, if Python finalizes ("calls `__del__` on") the `_Context`
 _before_ a `_ValueHandle` that belonged to that context, aka "the wrong order",

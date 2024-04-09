@@ -34,6 +34,8 @@ because we build on aarch64 using emulation, so `v0.11.1` should be ready on
 PyPI approximately 2024-04-11. Check out the full docs for PyMiniRacer
 [here](https://bpcreech.com/PyMiniRacer/).**_
 
+Some new PyMiniRacer features:
+
 ```python
 from py_mini_racer import MiniRacer
 

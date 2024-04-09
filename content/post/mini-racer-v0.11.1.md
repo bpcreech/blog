@@ -1,6 +1,6 @@
 ---
 title: "PyMiniRacer v0.11.1"
-date: "2024-04-08"
+date: "2024-04-09"
 lead: "Poke objects! Call functions! Await promises!"
 disable_comments: false # Optional, disable Disqus comments if true
 authorbox: true # Optional, enable authorbox for specific post
@@ -24,6 +24,14 @@ JS functions from Python, `async` support, and a discussion of the C++ changes
 needed to make all that work.
 
 <!--more-->
+
+_**Note: As of this writing on 2024-04-09, `v0.11.0` is
+[up on PyPI](https://pypi.org/project/mini-racer/) and I'm building the
+`v0.11.1` release, which has a bug fix for long-running microtask, and a lot of
+the C++ revamp explained below. PyMiniRacer builds take a few days because we
+build on aarch64 using emulation, so `v0.11.1` should be ready on PyPI
+approximately 2024-04-11. Check out the full docs for PyMiniRacer
+[here](https://bpcreech.com/PyMiniRacer/).**_
 
 ```python
 from py_mini_racer import MiniRacer

@@ -17,11 +17,12 @@ tags:
 In [this last blog post](https://bpcreech.com/post/mini-racer/), I discussed my
 revival of [PyMiniRacer](https://github.com/bpcreech/PyMiniRacer), a neat
 project created by [Sqreen](https://github.com/sqreen) to embed the V8
-JavaScript into Python. As of that post (`v0.8.0`), I hadn't touched the C++
-code yet. Here we talk about some extensions to PyMiniRacer, rolling up the
-changes up to `v0.11.1`: JS `Object` and `Array` manipulation, directly calling
-JS functions from Python, `async` support, and a discussion of the C++ changes
-needed to make all that work.
+JavaScript into Python. As of that post (`v0.8.0`), I had done a light
+reorganization of the C++ side of PyMiniRacer, but nothing big there yet. Here
+we talk about some extensions to PyMiniRacer, rolling up the changes up to
+`v0.11.1`: JS `Object` and `Array` manipulation, directly calling JS functions
+from Python, `async` support, and a discussion of the C++ changes needed to make
+all that work.
 
 <!--more-->
 

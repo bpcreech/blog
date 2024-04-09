@@ -28,10 +28,10 @@ all that work.
 
 _**Note: As of this writing on 2024-04-09, `v0.11.0` is
 [up on PyPI](https://pypi.org/project/mini-racer/) and I'm building the
-`v0.11.1` release, which has a bug fix for long-running microtask, and a lot of
-the C++ revamp explained below. PyMiniRacer builds take a few days because we
-build on aarch64 using emulation, so `v0.11.1` should be ready on PyPI
-approximately 2024-04-11. Check out the full docs for PyMiniRacer
+`v0.11.1` release, which has a bug fix for long-running microtasks, and a lot of
+the C++ revamp explained below. Official PyMiniRacer builds take a few days
+because we build on aarch64 using emulation, so `v0.11.1` should be ready on
+PyPI approximately 2024-04-11. Check out the full docs for PyMiniRacer
 [here](https://bpcreech.com/PyMiniRacer/).**_
 
 ```python

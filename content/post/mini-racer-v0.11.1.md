@@ -77,16 +77,18 @@ overhaul of the C++ side of PyMiniRacer, which is discussed below.
 ### Manipulating objects and arrays
 
 As of `v0.8.0` and earlier, PyMiniRacer could create and manipulate objects and
-arrays only at a distance: you could create them in the JS context via
-`MiniRacer.eval` statements, and poke at them via _more_ `MiniRacer.eval`
-statements to either pull out individual values or `JSON.stringify` them in
-bulk. `MiniRacer.eval` could convert primitives like numbers and strings
-directly to Python objects, but to get a member of an object, you had to run an
-evaluation of some JS code which would extract that member, like
-`mr.eval(my_obj["my_property"])` instead of simply writing
-`my_obj["my_property"]` in Python.
+arrays only at a distance. Sure, you could easily create objects in the JS
+context via `MiniRacer.eval` statements. However, getting to their _contents_
+was hard!
 
-It feels like programming with
+`MiniRacer.eval` could convert primitives like numbers and strings directly to
+Python objects, but to get a property of an object, you had to run an evaluation
+of some JS code which would extract that property, like
+`mr.eval(my_obj["my_property"])` instead of simply writing
+`my_obj["my_property"]` in Python. Or you could give up and `JSON.stringify` the
+whole object, and `json.loads` the serialized object on the Python side.
+
+The more you do it, the more it feels like programming with
 [waldos](https://en.wikipedia.org/wiki/Remote_manipulator):
 
 <div style="text-align: center;">
@@ -98,7 +100,7 @@ _Working with Objects and Arrays in PyMiniRacer v0.8.0.
 
 </div>
 
-Well, now you can directly mess with objects and arrays! I added a
+Well, now you can directly mess with objects and arrays from Python! I added a
 [`MutableMapping`](https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableMapping)
 (`dict`-like) interface for all derivatives of JS Objects, and a
 [`MutableSequence`](https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableSequence)

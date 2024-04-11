@@ -246,7 +246,7 @@ Anyway, `clang-tidy` is super useful; would recommend!
 So, to start off, for `async` code to work correctly in PyMiniRacer (and also,
 to run code off the Python thread, thus enabling `KeyboardInterrupt` of
 PyMiniRacer JS code), we need V8 to execute code _continually_, e.g., to process
-delayed callbacks from `setTimeout`. In other words, if want to be able to use
+delayed callbacks from `setTimeout`. In other words, if we want to be able to use
 `setTimeout` to schedule work for `N` seconds from now, and have it actually,
 you know, _run_ that delayed work, we need to convince V8 to actually run,
 continually, until explicitly shut down.

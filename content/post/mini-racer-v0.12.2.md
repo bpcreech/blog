@@ -177,7 +177,7 @@ such calls are ignored.
 
 Here's roughly what the system looks like:
 
-<center><div style="max-width: 300px;">
+<center><div style="max-width: 400px;">
 
 ```goat
 +----------------------------------------+
@@ -237,7 +237,7 @@ Here's roughly what the system looks like:
 | |                        |                          |        | |
 | |                        |  +-----------------------+------+ | |
 | |                        |  |                              | | |
-| |                        `->| v8::Function                 | | |
+| |                        '->| v8::Function                 | | |
 | |                           |                              | | |
 | |                           | data:                        | | |
 | |                           | +--------------------------+ | | |

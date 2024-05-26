@@ -177,7 +177,7 @@ such calls are ignored.
 
 Here's roughly what the system looks like:
 
-<table border="0"><tr><td>
+<table border="0"><tr><td width="50%">
 
 ```goat
 +----------------------------------------+
@@ -255,7 +255,7 @@ Here's roughly what the system looks like:
 +----------------------------------------------------------------+
 ```
 
-</td><td>
+</td><td width="50%">
 
 1. MiniRacer Python user code instantiates a `py_mini_racer.MiniRacer` object
    which contains a `py_mini_racer._Context` object.
@@ -311,38 +311,41 @@ Here's roughly what the system looks like:
 
 In my last post, I
 [talked about](https://bpcreech.com/post/mini-racer-v0.11.1/#stdshared_ptr-all-the-things)
-"regressing to C++ developer phase 1". As of PyMiniRacer `v0.11.1` we were using
-a DAG of `std::shared_ptr` references to manage lifecycle of a dozen different
-classes.
+"regressing to C++ developer phase 1" by using `std::shared_ptr` _everywhere_ to
+manage object lifecycles. As of PyMiniRacer `v0.11.1` we were using a DAG of
+`std::shared_ptr` references to manage lifecycle of a dozen different classes.
 
 I discovered [a bug](https://github.com/bpcreech/PyMiniRacer/issues/62) that
-this logic left behind. The Laissez-faire `std::shared_ptr` memory management
-pattern fails when we have reference cycles, and unfortunately we do have
-reference cycles in PyMiniRacer. In particular, we create and throw lambdas onto
+this logic left behind. The problem with the Laissez-faire
+`std::shared_ptr`-all-the-things memory management pattern is that we leak
+memory when we have reference cycles, and unfortunately we do have reference
+cycles in PyMiniRacer. In particular, we create and throw function closures onto
 the `v8::Isolate` message loop which contain `shared_ptr` references to
 objects... which eventually contain `shared_ptr` references to the `v8::Isolate`
 itself: a reference cycle! (We also had some bare references _not_ managed by a
 `shared_ptr`, which would result in a use-after-free in hard-to-reach situations
 during teardown of PyMiniRacer.)
 
-A sticky point with PyMiniRacer's design is that it uses the `v8::Isolate`
+A simple way to resolve that in _another_ system might be to explicitly clear
+out the `v8::Isolate`'s message queue on shutdown. Basically, by wiping out all
+the not-yet-executed closures, we can "cut" all the reference cycles on exit.
+However, a sticky point with PyMiniRacer's design is that it uses that same
 message queue even for teardown: we put tasks on the message queue which delete
 C++ objects, because it's the easiest way to ensure they're deleted under the
 `v8::Isolate` lock (discussion of that
-[here](https://groups.google.com/g/v8-users/c/glG3-3pufCo)). A different system
-might simply halt the message queue when we're shutting down, but PyMiniRacer
-can't simply do that, or it will leak C++ objects on exit.
+[here](https://groups.google.com/g/v8-users/c/glG3-3pufCo)). So PyMiniRacer
+can't simply clear out the message, or it will leak C++ objects on exit.
 
-After playing with this some and failing to get the lifecycles just right or
-even understand consistently the effective teardown order of dozens of different
-reference-counted objects, I realized we could switch to a different,
+After playing with this some and failing to get the lifecycles just right, and
+struggling to even understand the effective teardown order of dozens of
+different reference-counted objects, I realized we could switch to a different,
 easier-to-think-about pattern: every object putting tasks onto the `v8::Isolate`
 simply needs to ensure those tasks complete before it _anything it puts into
 those tasks_ is torn down.
 
 I'll restate that rule: _if you call `MiniRacer::IsolateManager::Run(xyz)`, you
 had better ensure that task is done **before** you destruct any objects you
-bound into the lambda `xyz`._
+bound into the function closure `xyz`._
 
 This rule seems obvious in restrospect! But it's hard to implement. I:
 

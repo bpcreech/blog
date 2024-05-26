@@ -177,7 +177,7 @@ such calls are ignored.
 
 Here's roughly what the system looks like:
 
-<center><div style="max-width: 400px;">
+<table border="0"><tr><td>
 
 ```goat
 +----------------------------------------+
@@ -243,7 +243,7 @@ Here's roughly what the system looks like:
 | |                           | +--------------------------+ | | |
 | | +-----------------+       | |                          | | | |
 | | |                 |  6    | |  v8::Array               | | | |
-| | | JavaScript code |------>| | [callback_id,            | | | |
+| | | JavaScript code +------>| | [callback_id,            | | | |
 | | |                 |       | |  callback_caller_id]     | | | |
 | | +-----------------+       | |                          | | | |
 | |                           | +--------------------------+ | | |
@@ -255,7 +255,7 @@ Here's roughly what the system looks like:
 +----------------------------------------------------------------+
 ```
 
-</div></center>
+</td><td>
 
 1. MiniRacer Python user code instantiates a `py_mini_racer.MiniRacer` object
    which contains a `py_mini_racer._Context` object.
@@ -298,6 +298,8 @@ Here's roughly what the system looks like:
 10. The `MiniRacer._ContextRegistry` converts the `callback_id` to the
     destination Python function object (`my_callback_func`), and finally passes
     the function parameters back to it.
+
+</td></tr></table>
 
 ### Un-`shared_ptr` all the things
 

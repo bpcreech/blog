@@ -334,9 +334,9 @@ Reading that diagram in order:
 3. ... and loops on `v8::platform::PumpMessageLoop` until shutdown.
 4. Then, any code which wants to _use_ the `Isolate`, such as
    `MiniRacer::CodeEvaluator` (the class which implements the `MiniRacer.eval`
-   function to run arbitrary JS code) can package up tasks into
-   `MiniRacer::AdHocTask` and
-5. ... throw them onto the `Isolate` work queue to actually run, on the
+   function to run arbitrary JS code) calls `MiniRacer::IsolateManager::Run`
+5. ... which wraps up tasks into an `MiniRacer::AdHocTask` and
+6. ... throws them onto the `Isolate` work queue to actually run, on the
    message-pumping thread.
 
 #### `std::shared_ptr` all the things!

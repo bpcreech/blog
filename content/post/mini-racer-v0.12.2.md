@@ -177,76 +177,85 @@ such calls are ignored.
 
 Here's roughly what the system looks like:
 
+<center><div style="max-width: 300px;">
+
 ```goat
 +----------------------------------------+
 |                                        |
-|      (Python) MiniRacer user code      |
+|           MiniRacer user code          |
 |                                        |
 |               +----------------------+ |
 |               |                      | |
 |               |   my_callback_func   | |
 |               |                      | |
-|               +------------+---------+ |
-|                          3 |   ^       |
-+----------------------------|---|-------+
-               1 |           |   |
-                 v           |   |
-+----------------------------|---|-------+
-|                            |   |       |
-|        (Python) MiniRacer  |   |       |
-|                            |   |       |
-| +--------------------------|---|-----+ |
-| |                          |   |     | |
-| |        (Python) _Context |   |     | |
-| |                          v   | 10  | |
+|               +----------+-----------+ |
+|                        3 |     ^       |
++--------------------------|-----|-------+
+              1  |         |     |
+                 v         |     |
++--------------------------|-----|-------+
+|                          |     |       |
+|               MiniRacer  |     |       |
+|                          |     |       |
+| +------------------------|-----|-----+ |
+| |                        |     |     | |
+| |             _Context   |     |     | |
+| |                        v     | 10  | |
 | | +----------------------------+---+ | |
 | | |                                | | |
 | | |      _CallbackRegistry         | | |
 | | |                                | | |
-| | +------------------------+-------+ | |
-| |                        4 |   ^     | |
-| +---------------+----------|---|-----+ |
-|               2 |          |   |       |
-+-----------------|----------|---|-------+
-                  |          |   |
-                  v          |   |
-+----------------------------|---|-----------------------------------------+
-| (C++) MiniRacer::Context   |   |                                         |
-|                            |   |                                         |
-|                            v   |                                         |
-| +------------------------------|---+   +-------------------------------+ |
-| |                              |   |   |  5                            | |
-| | (C++) MiniRacer              |   +-------+   (C++) v8::Isolate       | |
-| |      ::JSCallbackMaker     9 |   |   |   v                           | |
-| | +----------------------------+-+ |   | +---------------------------+ | |
-| | |                              | |   | |                           | | |
-| | |            (C++)             | |   | |        v8::Function       | | |
-| | |  MiniRacer::CallbackCaller   | |   | |                           | | |
-| | |                              | |   | |                           | | |
-| | +------------------------------+ |   | |                           | | |
-| |                              ^   |   | |                           | | |
-| +------------------------------|---+   | |  +----------------------+ | | |
-|                                | 8     | |  |                      | | | |
-|        +-----------------------+---+   | |  |        (data)        | | | |
-|        |                           |   | |  |     v8::Array        | | | |
-|        |           (C++)           |<----+  | [callback_id,        | | | |
-|        |      MiniRacer            | 7 | |  |  callback_caller_id] | | | |
-|        |      ::JSCallbackMaker    |   | |  |                      | | | |
-|        |      ::OnCalledStatic     |   | |  +----------------------+ | | |
-|        |                           |   | |                           | | |
-|        +---------------------------+   | +---------------------------+ | |
-|                                        |              ^                | |
-|                                        |              | 6              | |
-|                                        | +------------+--------------+ | |
-|                                        | |                           | | |
-|                                        | |      JavaScript code      | | |
-|                                        | |                           | | |
-|                                        | +---------------------------+ | |
-|                                        |                               | |
-|                                        +-------------------------------+ |
-|                                                                          |
-+--------------------------------------------------------------------------+
+| | +----------------------+---------+ | |
+| |                      4 |     ^     | |
+| +---------------+--------|-----|-----+ |
+|               2 |        |     |       |
++-----------------|--------|-----|-------+
+                  |        |     |
+ Python space     |        |     |
+··················|········|·····|································
+ C++ space        |        |     |
+                  v        |     |
++--------------------------|-----|-----+
+| MiniRacer::Context       |     |     |
+|                          |     |     |
+|                          v     |     |
+| +------------------------------|---+ |
+| |                              |   | |   +---------------------+
+| | MiniRacer::JSCallbackMaker   |   | |   |                     |
+| |                            9 |   | |   |      (C++)          |
+| | +----------------------------+-+ | |   | MiniRacer           |
+| | |                              | | |   |   ::JSCallbackMaker |
+| | |  MiniRacer::CallbackCaller   |<------+   ::OnCalledStatic  |
+| | |                              | | | 8 |                     |
+| | +------------------------------+ | |   +---------------------+
+| |                                  | |              ^               
+| +------------------------+---------+ +--------------|----------+
+|                        5 |                          |          |
+| +------------------------|--------------------------|--------+ |
+| |                        |                          |        | |
+| |  v8::Isolate           |                        7 |        | |
+| |                        |                          |        | |
+| |                        |  +-----------------------+------+ | |
+| |                        |  |                              | | |
+| |                        `->| v8::Function                 | | |
+| |                           |                              | | |
+| |                           | data:                        | | |
+| |                           | +--------------------------+ | | |
+| | +-----------------+       | |                          | | | |
+| | |                 |  6    | |  v8::Array               | | | |
+| | | JavaScript code |------>| | [callback_id,            | | | |
+| | |                 |       | |  callback_caller_id]     | | | |
+| | +-----------------+       | |                          | | | |
+| |                           | +--------------------------+ | | |
+| |                           |                              | | |
+| |                           +------------------------------+ | |
+| |                                                            | |
+| +------------------------------------------------------------+ |
+|                                                                |
++----------------------------------------------------------------+
 ```
+
+</div></center>
 
 1. MiniRacer Python user code instantiates a `py_mini_racer.MiniRacer` object
    which contains a `py_mini_racer._Context` object.
@@ -259,9 +268,9 @@ Here's roughly what the system looks like:
 
 3. MiniRacer Python user code passes Python function `my_callback_func` into
    `MiniRacer.wrap_py_function`. `MiniRacer` stores a wrapper of
-   `my_callback_func` in its `_CallbackRegistry`, thus generating a callback ID.
+   `my_callback_func` in its `_CallbackRegistry`, thus generating a `callback_id`.
 
-4. `MiniRacer.wrap_py_function` passes this callback ID down to the C++ side of
+4. `MiniRacer.wrap_py_function` passes this `callback_id` down to the C++ side of
    the house to generate a V8 callback function.
 
 5. `MiniRacer::JSCallbackMaker` creates a `v8::Function` within the
@@ -279,14 +288,14 @@ Here's roughly what the system looks like:
 
 8. `MiniRacer::JSCallbackMaker::OnCalledStatic` digs out the
    `[callback_id, callback_caller_id]` array to find the
-   `MiniRacer::CallbackCaller`, and the context-specific callback ID to pass
+   `MiniRacer::CallbackCaller`, and the `callback_id` to pass
    back to it.
 
 9. `MiniRacer::CallbackCaller` converts the returned V8 value to a
    `MiniRacer::BinaryValue`, and calls back to the Python C function pointer
-   with that and the callback ID.
+   with that and the `callback_id`.
 
-10. The `MiniRacer._ContextRegistry` converts the callback ID to the destination
+10. The `MiniRacer._ContextRegistry` converts the `callback_id` to the destination
     Python function object (`my_callback_func`), and finally passes the function
     parameters back to it.
 
@@ -348,12 +357,12 @@ This rule seems obvious in restrospect! But it's hard to implement. I:
 
 ### Breaking up the Python code
 
-As of `v0.7.0` PyMiniRacer was basically a single file, 519 lines of code.
+As of `v0.7.0` PyMiniRacer was basically a single Python file, 519 lines of code.
 
-As of `v0.11.1` that file was up to 1,355 lines of code. This was quickly
+As of `v0.11.1` that Python file was up to 1,355 lines of code. This was quickly
 growing beyond manageability!
 
-So I split it up. The largest file is now 473 LoC.
+So I split it up. The largest Python file is now 473 LoC.
 
 Splitting up code is always an exercise in breaking the code down into component
 parts, drawing out a DAG (hopefully acyclic!), and lumping things back together

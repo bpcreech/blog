@@ -228,7 +228,7 @@ Here's roughly what the system looks like:
 | | |  MiniRacer::CallbackCaller   |<------+   ::OnCalledStatic  |
 | | |                              | | | 8 |                     |
 | | +------------------------------+ | |   +---------------------+
-| |                                  | |              ^               
+| |                                  | |              ^
 | +------------------------+---------+ +--------------|----------+
 |                        5 |                          |          |
 | +------------------------|--------------------------|--------+ |
@@ -268,10 +268,11 @@ Here's roughly what the system looks like:
 
 3. MiniRacer Python user code passes Python function `my_callback_func` into
    `MiniRacer.wrap_py_function`. `MiniRacer` stores a wrapper of
-   `my_callback_func` in its `_CallbackRegistry`, thus generating a `callback_id`.
+   `my_callback_func` in its `_CallbackRegistry`, thus generating a
+   `callback_id`.
 
-4. `MiniRacer.wrap_py_function` passes this `callback_id` down to the C++ side of
-   the house to generate a V8 callback function.
+4. `MiniRacer.wrap_py_function` passes this `callback_id` down to the C++ side
+   of the house to generate a V8 callback function.
 
 5. `MiniRacer::JSCallbackMaker` creates a `v8::Function` within the
    `v8::Isolate`, with data attached containing an array of
@@ -288,16 +289,15 @@ Here's roughly what the system looks like:
 
 8. `MiniRacer::JSCallbackMaker::OnCalledStatic` digs out the
    `[callback_id, callback_caller_id]` array to find the
-   `MiniRacer::CallbackCaller`, and the `callback_id` to pass
-   back to it.
+   `MiniRacer::CallbackCaller`, and the `callback_id` to pass back to it.
 
 9. `MiniRacer::CallbackCaller` converts the returned V8 value to a
    `MiniRacer::BinaryValue`, and calls back to the Python C function pointer
    with that and the `callback_id`.
 
-10. The `MiniRacer._ContextRegistry` converts the `callback_id` to the destination
-    Python function object (`my_callback_func`), and finally passes the function
-    parameters back to it.
+10. The `MiniRacer._ContextRegistry` converts the `callback_id` to the
+    destination Python function object (`my_callback_func`), and finally passes
+    the function parameters back to it.
 
 ### Un-`shared_ptr` all the things
 
@@ -357,7 +357,8 @@ This rule seems obvious in restrospect! But it's hard to implement. I:
 
 ### Breaking up the Python code
 
-As of `v0.7.0` PyMiniRacer was basically a single Python file, 519 lines of code.
+As of `v0.7.0` PyMiniRacer was basically a single Python file, 519 lines of
+code.
 
 As of `v0.11.1` that Python file was up to 1,355 lines of code. This was quickly
 growing beyond manageability!

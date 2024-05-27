@@ -319,7 +319,7 @@ manage object lifecycles. As of PyMiniRacer `v0.11.1` we were using a DAG of
 `std::shared_ptr` references to manage lifecycle of a dozen different classes.
 
 I discovered [a bug](https://github.com/bpcreech/PyMiniRacer/issues/62) that
-this logic left behind. The problem with the Laissez-faire
+this logic left behind. The problem with the laissez-faire
 `std::shared_ptr`-all-the-things memory management pattern is that we leak
 memory when we have reference cycles, and unfortunately we do have reference
 cycles in PyMiniRacer. In particular, we create and throw function closures onto

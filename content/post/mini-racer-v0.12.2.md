@@ -325,9 +325,9 @@ Here's roughly what the system looks like:
 
 </td></tr></table>
 
-### Un-`shared_ptr` all the things
+### Making teardown more deterministic
 
-<div style="text-align: center;" width="300px">
+<div style="text-align: center;" width="250px">
 
 ![All the things meme](/img/all-the-things.jpg)
 

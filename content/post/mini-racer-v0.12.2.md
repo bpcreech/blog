@@ -405,4 +405,5 @@ This rule seems obvious in restrospect! But it's hard to implement. I:
    `IsolateManager` and its message pump loop.
 
 This is a little more code than we had before, but things are much simpler to
-reason about now!
+reason about now! I can confidently tell you that PyMiniRacer shuts down when
+you tell it to. :)

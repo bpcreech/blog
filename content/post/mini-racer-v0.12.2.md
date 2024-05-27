@@ -155,11 +155,15 @@ and hand that off to V8.
 
 Unfortunately,
 [V8 is pretty apathetic about telling us when it's _done with_ an external C++ object we give it](https://stackoverflow.com/questions/24107280/v8-weakcallback-never-gets-called).
-I couldn't make the V8 finalizer callback work at all, and all commentary I can
-find on the matter says trying to get V8 `MakeWeak` and finalizers work reliably
-is a fool's errand. This creates a memory management conundrum: we need to
-create a small bit of per-callback C++ state and hand it to V8, but V8 won't
-reliably tell us when it has finally dropped all references to that state.
+V8 will
+[happily accept a raw pointer to an external object](https://github.com/v8/v8/blob/77f045f1c9329cafc90edd347fba6f22e4687031/include/v8-external.h#L21),
+but it doesn't reliably call you back to tell you when it's _done with_ that raw
+pointer. I couldn't make the V8 finalizer callback work at all, and all
+commentary I can find on the matter says trying to get V8 `MakeWeak` and
+finalizers work reliably is a fool's errand. This creates a memory management
+conundrum: we need to create a small bit of per-callback C++ state and hand it
+to V8, but V8 won't reliably tell us when it has finally dropped all references
+to that state.
 
 So I moved to a model of creating _one such callback object per MiniRacer
 context_. This object outlives the `v8::Isolate`, so we're no longer relying on

@@ -133,7 +133,7 @@ PyMiniRacer is basically
 ["Alternate implementation idea 3"](https://github.com/bpcreech/PyMiniRacer/issues/39#issuecomment-2043984826).
 Generally speaking:
 
-#### Generalizing PyMiniRacer callbacks
+#### Generalizing PyMiniRacer callbacks and managing memory in the face of apathy
 
 PyMiniRacer already had a C++-to-Python callback mechanism; this was used to
 await `Promise` objects. We just had to generalize it!
@@ -142,7 +142,8 @@ await `Promise` objects. We just had to generalize it!
 callbacks are only used 0.5 times on average (either the `resolve` or `reject`
 is used exactly once). PyMiniRacer handled cleanup of these on its own; the
 first time either `resolve` or `reject` was called, PyMiniRacer could destroy
-both callbacks.
+both callbacks. This technique was borrowed from
+[V8's d8 tool](https://github.com/v8/v8/blob/0f719663da59ee690f3b72c520f8f9ea2328071a/src/d8/d8.cc#L1493).
 
 But now we want to expose arbitary-use callbacks, which need to live longer...
 We just need to attach a tiny bit of C++ state (the Python address of the
@@ -150,12 +151,12 @@ callback function, and a pointer to our V8 value wrapper) to a callback object,
 and hand that off to V8.
 
 Unfortunately,
-[V8 isn't very good at telling us when it's _done with_ an extension object we give it](https://stackoverflow.com/questions/24107280/v8-weakcallback-never-gets-called).
+[V8 is pretty apathetic about telling us when it's _done with_ an external C++ object we give it](https://stackoverflow.com/questions/24107280/v8-weakcallback-never-gets-called).
 I couldn't make it work at all, and all commentary I can find on the matter says
 trying to get V8 `MakeWeak` and finalizers work reliably is a fool's errand.
 This creates a memory management conundrum: we need to create a small bit of
-per-callback C++ state and hand it to V8, but V8 won't reliably tell us when all
-the references to that state are gone.
+per-callback C++ state and hand it to V8, but V8 won't reliably tell us when it
+has finally dropped all references to that state.
 
 So I moved to a model of creating _one such callback object per MiniRacer
 context_. We can tear _that_ object down when tearing down the whole MiniRacer
@@ -171,7 +172,9 @@ callback, and remove entries from that map when it wants to. (This is what the
 down the callback and its ID on its own schedule, in total ignorance of
 JavaScript's references to that callback ID, it's possible for JS to keep trying
 to call Python after it tore down the callback. This is working as designed;
-such calls are ignored.
+such calls can be easily spotted because the `callback_caller_id` or
+`callback_id` don't reference an active `CallbackCaller` or callback (see
+diagram below), and they can thus be easily ignored.
 
 #### System diagram
 
@@ -190,7 +193,7 @@ Here's roughly what the system looks like:
 |               |                      | |
 |               +----------+-----------+ |
 |                        3 |     ^       |
-+--------------------------|-----|-------+
++----------------+---------|-----|-------+
               1  |         |     |
                  v         |     |
 +--------------------------|-----|-------+
@@ -303,7 +306,7 @@ Here's roughly what the system looks like:
 
 ### Un-`shared_ptr` all the things
 
-<div style="text-align: center;">
+<div style="text-align: center;" width="300px">
 
 ![All the things meme](/img/all-the-things.jpg)
 

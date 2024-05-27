@@ -133,7 +133,7 @@ PyMiniRacer is basically
 ["Alternate implementation idea 3"](https://github.com/bpcreech/PyMiniRacer/issues/39#issuecomment-2043984826).
 Generally speaking:
 
-#### Generalizing PyMiniRacer callbacks and managing memory in the face of apathy
+#### Generalizing PyMiniRacer callbacks and sharing allocated objects with V8
 
 PyMiniRacer already had a C++-to-Python callback mechanism; this was used to
 await `Promise` objects. We just had to generalize it!
@@ -171,16 +171,35 @@ callback, and remove entries from that map when it wants to. (This is what the
 `wrap_py_function` context manager does on `__exit__`). Since Python is tearing
 down the callback and its ID on its own schedule, in total ignorance of
 JavaScript's references to that callback ID, it's possible for JS to keep trying
-to call Python after it tore down the callback. This is working as designed;
-such calls can be easily spotted because the `callback_caller_id` or
+to call the callback after Python already tore it down. This is working as
+designed; such calls can be easily spotted because the `callback_caller_id` or
 `callback_id` don't reference an active `CallbackCaller` or callback (see
 diagram below), and they can thus be easily ignored.
+
+I think this could be turned into a generalized strategy for safely sharing
+allocated C++ memory with V8:
+
+1. Assume any _raw_ pointers and references to C++ objects which you directly
+   share with V8 will need to live at least as long as the `V8::Isolate`.
+2. If you want to be able to delete any objects _before_ the `v8::Isolate`
+   exits, don't share _raw_ pointers and references. Instead:
+   1. On the C++ side, create an ID-number-to-pointer map, and give V8 only ID
+      numbers.
+   2. Create an API, whether in C++ or JavaScript (or Python which calls C++ in
+      PyMiniRacer's case) which authoratively tears down the object and the
+      ID-number-to-pointer map entry. (Don't rely on V8 to tell you when all
+      references to the object have dropped; it won't do this reliably.)
+   3. Be prepared for JavaScript code to try and use the ID after you've torn
+      down the object. The C++ code can detect this (because the ID is not in
+      the map), and safely reject such attempts.
 
 #### System diagram
 
 Here's roughly what the system looks like:
 
 <table border="0"><tr><td width="50%">
+
+<div style="min-width:200px">
 
 ```goat
 +----------------------------------------+
@@ -257,6 +276,8 @@ Here's roughly what the system looks like:
 |                                                                |
 +----------------------------------------------------------------+
 ```
+
+</div>
 
 </td><td width="50%">
 
@@ -352,41 +373,22 @@ bound into the function closure `xyz`._
 
 This rule seems obvious in restrospect! But it's hard to implement. I:
 
-1. Modified `MiniRacer::IsolateManager::Run` to always return a future, to make
-   it easier to wait on these tasks
+1. Modified
+   [`MiniRacer::IsolateManager::Run`](https://github.com/bpcreech/PyMiniRacer/blob/99591c962b219251d309e0f5899b3cf2a676ab9e/src/v8_py_frontend/isolate_manager.h#L87)
+   to always return a future, to make it easier to wait on these tasks. This is
+   used
+   [in](https://github.com/bpcreech/PyMiniRacer/blob/99591c962b219251d309e0f5899b3cf2a676ab9e/src/v8_py_frontend/isolate_memory_monitor.cc#L49)
+   [various](https://github.com/bpcreech/PyMiniRacer/blob/99591c962b219251d309e0f5899b3cf2a676ab9e/src/v8_py_frontend/context_holder.cc#L28)
+   [places](https://github.com/bpcreech/PyMiniRacer/blob/99591c962b219251d309e0f5899b3cf2a676ab9e/src/v8_py_frontend/context.cc#L51)
+   to ensure the above rule is honored.
 
 2. Refactored `CancelableTaskManager` completely to make it _explicitly track_
-   all the tasks it makes, just so it can reliably cancel _and await_ them all
-   upon teardown (where before it was sort of "fire and forget").
+   all the tasks it makes, just so it can
+   [reliably cancel _and await_ them all upon teardown](https://github.com/bpcreech/PyMiniRacer/blob/99591c962b219251d309e0f5899b3cf2a676ab9e/src/v8_py_frontend/cancelable_task_runner.cc#L26)
+   (where before it would just sort of "fire and forget" tasks, not at all
+   caring if they ever actually finished).
 
-3. Added a simple new garbage-collection algorithm in `IsolateObjectCollector`
+3. Added a simple new garbage-collection algorithm in
+   [`IsolateObjectCollector`](https://github.com/bpcreech/PyMiniRacer/blob/99591c962b219251d309e0f5899b3cf2a676ab9e/src/v8_py_frontend/isolate_object_collector.h#L13)
    to ensure all the garbage is gone before we move on to tearing down the
    `IsolateManager` and its message pump loop.
-
-### Breaking up the Python code
-
-As of `v0.7.0` PyMiniRacer was basically a single Python file, 519 lines of
-code.
-
-As of `v0.11.1` that Python file was up to 1,355 lines of code. This was quickly
-growing beyond manageability!
-
-So I split it up. The largest Python file is now 473 LoC.
-
-Splitting up code is always an exercise in breaking the code down into component
-parts, drawing out a DAG (hopefully acyclic!), and lumping things back together
-into files where _hopefully_ a logical pattern emerges.
-
-A novel part of this, to me, is that when using strict types (which PyMiniRacer
-does as of `v0.11.1`), in order to avoid import cycles after breaking files up,
-we need to define
-[Abstract Base Classes](https://docs.python.org/3/library/abc.html). E.g., if
-type `A` has methods which depend on type `B` _and vice versa_, and you want to
-put `A` and `B` into separate Python files, _and_ have `A` and `B` describe each
-other with typing information, the only recourse is to define an abstract
-interface for either `A` or `B` _or both_, and put that into a _third_ (and
-maybe _fourth_) Python file.
-
-This (defining a common interface or abstract type to break up import cycles) is
-a really developer journey in C++ and Java, but this was the first time I've
-found myself doing it in Python. Hooray for strict types?
